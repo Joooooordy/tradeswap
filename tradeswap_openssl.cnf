@@ -1,0 +1,21 @@
+[ req ]
+default_bits        = 4096
+default_keyfile     = tradeswap.test.key
+distinguished_name  = req_distinguished_name
+req_extensions      = v3_req
+x509_extensions     = v3_req
+
+[ req_distinguished_name ]
+C = NL               # Two-letter country code
+ST = Noord-Brabant
+L = Fijnaart
+CN = tradeswap.test  # Your domain or common name
+
+[ v3_req ]
+# Extensions for SAN
+subjectAltName = @alt_names
+
+[ alt_names ]
+DNS.1 = tradeswap.test    # Add your domain or hostname here
+DNS.2 = localhost         # Add localhost or another domain
+IP.1  = 192.168.56.56     # Add IP addresses if needed
