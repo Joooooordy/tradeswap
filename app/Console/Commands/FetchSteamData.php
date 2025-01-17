@@ -6,6 +6,7 @@ use App\Models\UserInventory;
 use Illuminate\Console\Command;
 use App\Services\SteamService;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 
 class FetchSteamData extends Command
 {
@@ -33,7 +34,7 @@ class FetchSteamData extends Command
             // Get the corresponding user for this steamId
             if (!isset($users[$index])) {
                 $this->error("No user available for Steam ID: $steamId");
-                continue;
+                exit();
             }
 
             $user = $users[$index];
@@ -71,6 +72,7 @@ class FetchSteamData extends Command
                     // Initialize status and rarity
                     $status = 'unknown'; // Default status
                     $rarity = $steamService->getExteriorFromItem($item);
+                    $icon = $steamService->getItemImageFromItem($item);
 
                     // Check if 'tradable' key exists and handle it
                     if (isset($item['tradable'])) {
@@ -93,7 +95,9 @@ class FetchSteamData extends Command
                             'game' => 'Counter-Strike 2',
                             'rarity' => $rarity,
                             'status' => $status,
+                            'icon_url' => $icon,
                         ]);
+                        $this->info("icon_url '$icon' found for item '{$item['market_name']}'.");
                         $this->info("Successfully inserted item '{$item['market_name']}' for user ID: {$user->id}.");
                     } catch (\Exception $e) {
                         $this->error("Failed to insert item '{$item['market_name']}' for user ID: {$user->id}: " . $e->getMessage());

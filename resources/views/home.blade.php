@@ -24,6 +24,9 @@
             <div class="items-grid">
                 @foreach($all_items as $item)
                     <div class="item">
+                        <div class="item-image">
+                            <img class="item-icon" src="{{$item->icon_url}}" alt="icon.png"/>
+                        </div>
                         <h3>{{ $item->item_name }}</h3>
                         <p>Game: {{ $item->game }}</p>
                         <p>Rarity: {{ $item->rarity }}</p>

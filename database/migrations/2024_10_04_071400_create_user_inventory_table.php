@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('game');
             $table->string('rarity')->nullable();
             $table->string('status')->nullable();
+            $table->string('icon_url')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

@@ -21,6 +21,7 @@ class UserInventory extends Model
         'game',
         'rarity',
         'status',
+        'icon_url',
     ];
 
     public function user()

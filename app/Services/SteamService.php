@@ -47,35 +47,67 @@ class SteamService
         while ($attempt < $maxRetries) {
             try {
                 $response = Http::timeout(60)->get($url);
-                break;
+
+                // If the request fails, log and handle retry logic
+                if ($response->failed()) {
+                    Log::warning("Attempt {$attempt} failed: API request returned status {$response->status()}", [
+                        'steam_id' => $steamId,
+                        'app_id' => $appId,
+                    ]);
+
+                    $attempt++;
+                    if ($attempt >= $maxRetries) {
+                        Log::error('Max retries reached. Unable to fetch player inventory.', [
+                            'steam_id' => $steamId,
+                            'app_id' => $appId,
+                        ]);
+                        return [];
+                    }
+
+                    sleep(1); // Wait before retrying
+                    continue;
+                }
+
+                // Check if the inventory is private or inaccessible
+                if ($response->status() === 403) { // HTTP 403 Forbidden
+                    Log::info('Inventory is private or inaccessible.', [
+                        'steam_id' => $steamId,
+                        'app_id' => $appId,
+                    ]);
+                    return []; // Return an empty array for private inventories
+                }
+
+                break; // Exit loop if successful
             } catch (ConnectionException $e) {
                 $attempt++;
-                Log::warning("Attempt {$attempt} failed: {$e->getMessage()}");
+                Log::warning("Connection attempt {$attempt} failed: {$e->getMessage()}");
 
                 if ($attempt >= $maxRetries) {
-                    Log::error('Max retries reached. Unable to fetch player summaries.', [
+                    Log::error('Max retries reached. Unable to fetch player inventory due to connection errors.', [
                         'steam_id' => $steamId,
                     ]);
                     return [];
                 }
 
-                sleep(1);
+                sleep(1); // Wait before retrying
             }
         }
 
-        if ($response->failed()) {
-            Log::error('API request failed', [
-                'status' => $response->status(),
-                'body' => $response->body(),
+        // Parse the response JSON
+        $data = $response->json();
+        if (!$data) {
+            Log::error('Failed to parse response JSON.', [
                 'steam_id' => $steamId,
                 'app_id' => $appId,
+                'response_body' => $response->body(),
             ]);
             return [];
         }
 
-        $assets = $response->json()['assets'] ?? [];
-        $descriptions = $response->json()['descriptions'] ?? [];
+        $assets = $data['assets'] ?? [];
+        $descriptions = $data['descriptions'] ?? [];
 
+        // Map descriptions to classid_instanceid for easy lookup
         $itemMap = [];
         foreach ($descriptions as $description) {
             $key = $description['classid'] . '_' . $description['instanceid'];
@@ -95,11 +127,16 @@ class SteamService
                     'descriptions' => $itemMap[$key], // Include the description data
                 ];
             } else {
-                Log::warning('Item mapping not found for classid and instanceid:', ['classid' => $asset['classid'], 'instanceid' => $asset['instanceid']]);
+                Log::warning('Item mapping not found for classid and instanceid:', [
+                    'classid' => $asset['classid'],
+                    'instanceid' => $asset['instanceid'],
+                ]);
             }
         }
+
         return $items;
     }
+
 
     public function getExteriorFromItem($item)
     {
@@ -124,4 +161,22 @@ class SteamService
 
         return $exterior; // Return the extracted exterior
     }
+
+    public function getItemImageFromItem($item)
+    {
+        $iconUrl = null;
+
+        // Check if the icon URL is available in the item data
+        if (!empty($item['descriptions']['icon_url'])) {
+            // Steam provides a relative URL, we need to prepend it with the base URL for images
+            $iconUrl = 'https://community.cloudflare.steamstatic.com/economy/image/' . $item['descriptions']['icon_url'];
+        } else {
+            Log::warning('No icon URL found for item.', [
+                'item_id' => $item['classid'] ?? 'Unknown',
+            ]);
+        }
+
+        return $iconUrl; // Return the image URL or null if not found
+    }
+
 }

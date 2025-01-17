@@ -120,6 +120,11 @@ h1 {
     margin: 5px 0;
 }
 
+img.item-icon {
+    width: 15%;
+    padding-bottom: 8px;
+}
+
 .trade-button {
     position: absolute;
     right: 20px;
