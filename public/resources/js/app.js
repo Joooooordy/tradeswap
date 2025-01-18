@@ -31,4 +31,13 @@ $(document).ready(function () {
             $(".dropdown-content").hide();
         }
     });
+
+    // ***************************//
+    // CHECK IF CURRENT URL IS /LOGIN//
+    //***************************//
+    if (window.location.pathname.endsWith('/login')) {
+        // Hide the navbar
+        console.log(window.location.pathname)
+        $('.navbar').hide();
+    }
 });

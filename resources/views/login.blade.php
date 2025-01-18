@@ -5,9 +5,10 @@
 @include('nav')
 
 <div class="login">
-    <div class="avatar">
-        <img src="/images/avatar.png" alt="avatar"/>
-    </div>
+    <a href="/" class="avatar">
+        <img src="apple-touch-icon.png" alt="avatar">
+    </a>
+
     <h2>Login</h2>
 
     <form id="login-form" class="login-form" action="{{ route('login') }}" method="POST">
@@ -24,7 +25,7 @@
             </label>
             <span class="material-symbols-outlined" id="login"> lock </span>
         </div>
-        <button type="submit">LOGIN</button>
+        <button type="submit">Login</button>
         <a href="#">Forgot your credentials?</a>
         <a href="/register">Register?</a>
     </form>
