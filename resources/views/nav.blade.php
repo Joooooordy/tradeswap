@@ -16,41 +16,55 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css"
+    />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.js"
-            integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-            crossorigin="anonymous"></script>
+            integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="{{ asset('/resources/js/app.js') }}"></script>
     <script src="{{ asset('/resources/js/ajax.js') }}"></script>
 </head>
 <body>
 
 <div class="navbar">
-    <div class="menu">
-        <a href="/">Home</a>
-    </div>
-    @auth
-        <div class="logout-menu">
-            <span class="material-symbols-outlined" id="account">person</span>
+    <div class="nav-wrapper">
+        <div class="menu">
+            <a href="/">Home</a>
+        </div>
 
-            <div id="dropdownMenu" class="dropdown-content">
-                <p>Hallo {{ucfirst(Auth::user()->name)}}</p>
-                <a href="{{ route('profile', ['id' => Auth::user()->id]) }}">Account</a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                    @csrf
-                </form>
-                <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                    Logout
-                </a>
+        <div class="search-bar">
+            <form id="search-form" action="{{ route('search') }}" method="GET">
+                @csrf
+                <input type="text" id="search-input" name="query" placeholder="Search for items or users..."
+                       autocomplete="off">
+                <button type="submit" class="search-button">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+                <div id="suggestions" class="suggestions-list"></div>
+            </form>
+        </div>
+
+        @auth
+            <div class="logout-menu">
+                <span class="material-symbols-outlined" id="account">person</span>
+
+                <div id="dropdownMenu" class="dropdown-content">
+                    <p>Hallo {{ucfirst(Auth::user()->name)}}</p>
+                    <a href="{{ route('profile', ['id' => Auth::user()->id]) }}">Account</a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                </div>
             </div>
-        </div>
-    @else
-        <div class="login-page">
-            <a href="/login">Login</a>
-        </div>
-    @endauth
+        @else
+            <div class="login-page">
+                <a href="/login">Login</a>
+            </div>
+        @endauth
+    </div>
 </div>
-
 
 </body>
 </html>

@@ -10,20 +10,6 @@
     <div class="item-showcase">
         @if($all_items->count())
             <div class="items-grid">
-                <div class="info-tainer">
-                    <div class="home-text">
-                        <h2>Instant, Secure
-                            CS2 Skin Trading</h2>
-                        <h4>Trade CS2 (CS:GO) skins with fast trading bots</h4>
-                        Tradeswap.test is the highest rated CS2 (CSGO) skin trading site.
-                        The best trading bot for instant trades with the lowest fees.
-                    </div>
-                    <div class="start-trading-button">
-                        <a href="#">Trade Items Now</a>
-                        <p>Register now and get $5 bonus</p>
-                    </div>
-                </div>
-
                 @foreach($all_items as $item)
                     <div class="item">
                         <div class="item-image">
@@ -36,10 +22,10 @@
                         <p>Sold by: {{ $item->user->name }}</p>
                     </div>
                 @endforeach
+                @else
+                    <p>No items found.</p>
+                @endif
             </div>
-        @else
-            <p>No items found.</p>
-        @endif
     </div>
 </div>
 

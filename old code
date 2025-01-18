@@ -1,0 +1,83 @@
+ <div class="trade-button">
+                            @auth
+                                @if(auth()->user()->id == $item->seller->id)
+                                    <a disabled>You cannot trade with yourself</a>
+                                @else
+                                    <a href="{{ route('showForm', ['item_id' => $item->id, 'trader_id' => $item->seller->id]) }}">Trade</a>
+                                @endif
+                            @else
+                                <a href="{{ route('login') }}">Trade</a>
+                            @endauth
+                        </div>
+
+
+                        <div class="pagination">
+                                        {{ $all_items->links() }}
+                                    </div>
+
+                                    .trade-button {
+                                        position: relative;
+                                        top: 15%;
+                                        transform: translateY(-50%); /* Center vertically */
+                                    }
+
+                                    .trade-button a {
+                                        background-color: #007bff;
+                                        color: white;
+                                        padding: 10px 15px;
+                                        text-decoration: none;
+                                        border-radius: 5px;
+                                    }
+
+                                    .trade-button a:hover {
+                                        background-color: #0056b3;
+                                    }
+
+                                    /* Pagination */
+                                    .pagination {
+                                        text-align: center;
+                                        margin: 20px 0;
+                                    }
+
+                                    .pagination a {
+                                        display: inline-block;
+                                        padding: 10px 15px;
+                                        margin: 5px;
+                                        background-color: #ddd;
+                                        border-radius: 5px;
+                                        text-decoration: none;
+                                        color: #333;
+                                    }
+
+                                    .pagination a.active {
+                                        background-color: #5cb85c;
+                                        color: white;
+                                    }
+
+                                    .pagination a:hover {
+                                        background-color: #4cae4c;
+                                        color: white;
+                                    }
+
+                                    .pagination svg {
+                                        width: 20px;
+                                        height: 20px;
+                                    }
+
+                                    .flex.justify-between.flex-1.sm\:hidden {
+                                        display: none;
+                                    }
+
+.language select {
+    background-color: #222;
+    color: #fff;
+    border: 1px solid #333;
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.language select:hover {
+    background-color: #444; /* Hover effect */
+}

@@ -5,12 +5,12 @@
 html,
 body,
 .wrapper {
-    height: 100%;
+    max-height: 100%;
 }
 
 body {
     color: black;
-    background-color: #9ca3af;
+    background-color: #5A5A66;
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
@@ -29,36 +29,34 @@ h1 {
 
 .wrapper {
     width: 90%;
-    max-width: 1200px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 50px 20px 50px 20px;
+    box-sizing: border-box;
 }
 
 .search-bar {
-    margin-bottom: 20px;
+    margin: 10px;
     text-align: center;
 }
 
 .search-bar input[type="text"] {
     padding: 10px;
-    width: 300px;
+    width: 400px;
     font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    border: 3px solid white;
+    border-radius: 15px;
 }
 
 .search-bar button {
+    position: relative;
+    background: white;
+    right: 10%;
     padding: 10px;
     font-size: 16px;
-    background-color: #5cb85c;
-    color: white;
+    color: black;
     border: none;
-    border-radius: 5px;
+    border-radius: 15px;
     cursor: pointer;
-}
-
-.search-bar button:hover {
-    background-color: #4cae4c;
 }
 
 .suggestions-list {
@@ -67,12 +65,14 @@ h1 {
     border-radius: 15px;
     max-height: 310px;
     position: absolute;
+    left: 30%;
     background-color: white;
     z-index: 1000;
-    width: 61%;
+    width: 40%;
     overflow: hidden;
     display: none;
 }
+
 .suggestions-list div {
     padding: 10px;
     cursor: pointer;
@@ -86,28 +86,29 @@ h1 {
 .item-showcase {
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    overflow: visible;
 }
 
 .items-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px; /* Space between items */
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    width: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
 }
 
 .item {
-    border: 1px solid #ddd;
-    padding: 15px;
-    width: 100%;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    background-color: white;
-    margin: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background: #BAC1B8;
+    padding: 10px 10px 35px 10px;
     border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+    will-change: contents;
 }
 
 .item h3 {
@@ -120,63 +121,50 @@ h1 {
     margin: 5px 0;
 }
 
+.item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 8;
+}
+
 img.item-icon {
-    width: 15%;
+    max-width: 30%;
     padding-bottom: 8px;
+    height: auto;
 }
 
-.trade-button {
-    position: absolute;
-    right: 20px;
-    top: 50%;
-    transform: translateY(-50%); /* Center vertically */
+.info-tainer {
+    color: #edf2f7;
+    padding: 10px;
 }
 
-.trade-button a {
+.home-text h2 {
+    text-align: unset;
+    color: inherit;
+    margin: inherit;
+}
+
+.start-trading-button {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 30px 0 0 0;
+}
+
+.start-trading-button a {
     background-color: #007bff;
     color: white;
-    padding: 10px 15px;
+    padding: 10px 14px;
     text-decoration: none;
     border-radius: 5px;
 }
 
-.trade-button a:hover {
+.start-trading-button a:hover {
     background-color: #0056b3;
 }
 
-/* Pagination */
-.pagination {
-    text-align: center;
-    margin: 20px 0;
-}
-
-.pagination a {
-    display: inline-block;
-    padding: 10px 15px;
-    margin: 5px;
-    background-color: #ddd;
-    border-radius: 5px;
-    text-decoration: none;
-    color: #333;
-}
-
-.pagination a.active {
-    background-color: #5cb85c;
-    color: white;
-}
-
-.pagination a:hover {
-    background-color: #4cae4c;
-    color: white;
-}
-
-.pagination svg {
-    width: 20px;
-    height: 20px;
-}
-
-.flex.justify-between.flex-1.sm\:hidden {
-    display: none;
+.start-trading-button p {
+    margin: 12px 0 0 12px;
 }
 
 
@@ -204,12 +192,23 @@ img.item-icon {
 / NAVBAR
 /**********************************
  */
+
+.nav-wrapper {
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+}
+
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: #333;
     padding: 10px 20px;
+    width: 100%;
 }
 
 .navbar a {
@@ -679,5 +678,149 @@ label {
 .text-center {
     text-align: center; /* Center align the button */
 }
+
+
+/**********************************
+/ FOOTER
+/**********************************/
+.footer {
+    background-color: #333;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    padding: 40px 0;
+    box-shadow: 0 -1px 10px rgba(0, 0, 0, 0.2); /* Adds subtle shadow */
+}
+
+.footer .footer-container {
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.footer-top {
+    display: flex;
+    flex-direction: column; /* Stacking items vertically */
+    align-items: center; /* Center the content */
+    border-bottom: 1px solid #f7fafc;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+.footer-top .logo img {
+    width: 150px;
+    margin-bottom: 20px; /* Adds space between logo and social links */
+}
+
+.logo h4{
+    text-align: center;
+}
+
+.social-links {
+    font-size: 25px;
+    display: flex;
+    justify-content: center; /* Center social icons */
+    gap: 15px;
+    will-change: contents;
+}
+
+.social-links a.youtube {
+    color: red;
+}
+
+.social-links a.twitter {
+    color: #157ae1;
+}
+
+.social-links a.facebook {
+    color: #0056b3;
+}
+
+.social-links a.instagram {
+    color: #c7a1ff;
+}
+
+.social-links a.discord {
+    color: #4a5568;
+}
+
+.social-links a.envelope {
+    color: #cbd5e0;
+}
+
+.social-links a {
+    display: inline-block;
+    transition: transform 0.2s ease;
+}
+
+.social-links a:hover {
+    transform: scale(1.175); /* Adds hover scale effect */
+}
+
+.social-links img {
+    width: 24px;
+    height: 24px;
+}
+
+.footer-middle {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    margin-bottom: 40px;
+    align-items: flex-start;
+    flex-direction: row;
+}
+
+.footer-middle .links {
+    flex: 1;
+    text-align: center;
+}
+
+.links h4 {
+    margin-bottom: 15px;
+    font-size: 18px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #fff;
+}
+
+.links ul {
+    list-style: none;
+    padding: 0;
+    text-align: center;
+}
+
+.links ul li {
+    margin-bottom: 10px;
+}
+
+.links ul li a {
+    color: #ccc;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.links ul li a:hover {
+    color: white;
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #ccc;
+    border-top: 1px solid #f7fafc;
+    padding-top: 10px;
+}
+
+.footer-bottom a {
+    text-decoration: none;
+    color: white;
+}
+
+.payment-icons {
+    margin: 5px 0 0 0;
+    font-size: 25px;
+}
+
 
 

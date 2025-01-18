@@ -28,7 +28,7 @@ class UserInventoryController extends Controller
         $all_items->appends(['query' => $query]);
 
         // Return the view with the search results
-        return view('home', compact('all_items'));
+        return view('results', compact('all_items'));
     }
 
     public function predictiveSearch(Request $request)

@@ -7,6 +7,7 @@
     <div class="content">
         @yield('content')
     </div>
+    @include('footer')
 </body>
 
 </html>
