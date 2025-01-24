@@ -2,11 +2,11 @@
 <html lang="en">
 <body>
 
-@include('nav')
+@include('templates.nav')
 
 <div class="register">
     <div class="avatar">
-        <img src="/images/avatar.png"  alt="avatar"/>
+        <img src="/images/avatar.png" alt="avatar"/>
     </div>
     <h2>Register</h2>
 
@@ -14,19 +14,19 @@
         @csrf
         <div class="textbox">
             <label>
-                <input type="text" name="username" placeholder="Username" required />
+                <input type="text" name="username" placeholder="Username" required/>
             </label>
             <span class="material-symbols-outlined"> account_circle </span>
         </div>
         <div class="textbox">
             <label>
-                <input type="email" name="email" placeholder="Email" required />
+                <input type="email" name="email" placeholder="Email" required/>
             </label>
             <span class="material-symbols-outlined"> account_circle </span>
         </div>
         <div class="textbox">
             <label>
-                <input type="password" name="password" placeholder="Password" required />
+                <input type="password" name="password" placeholder="Password" required/>
             </label>
             <span class="material-symbols-outlined"> lock </span>
         </div>

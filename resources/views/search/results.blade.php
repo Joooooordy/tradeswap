@@ -2,7 +2,7 @@
 <html lang="en">
 <body>
 
-@include('nav')
+@include('templates.nav')
 
 
 <div class="wrapper">
@@ -29,7 +29,7 @@
     </div>
 </div>
 
-@include('footer')
+@include('templates.footer')
 </body>
 </html>
 

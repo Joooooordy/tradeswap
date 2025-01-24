@@ -3,11 +3,11 @@
 
 <body>
 
-    @include('nav')
-    <div class="content">
-        @yield('content')
-    </div>
-    @include('footer')
+@include('templates.nav')
+<div class="content">
+    @yield('content')
+</div>
+@include('templates.footer')
 </body>
 
 </html>

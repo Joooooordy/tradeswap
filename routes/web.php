@@ -14,7 +14,7 @@ Route::get('/', function () {
 });
 
 Route::get('/login', function () {
-    return view('login');
+    return view('registering.login');
 })->name('login');
 
 Route::get('/register', function() {
@@ -34,9 +34,10 @@ Route::post('/login', [LoginController::class, 'authenticate'])->name('login');
 Route::get('users/{id}', [UserController::class, 'show'])->name('profile');
 
 //trading routes
+Route::get('/csgo/trade', [TradeController::class, 'showTrade'])->name('showTrade');
+
 Route::middleware('auth')->group(function () {
     Route::get('/trade/items/{user}', [TradeController::class, 'getUserItems'])->name('getUserItems');
-    Route::get('/csgo/trade', [TradeController::class, 'showForm'])->name('showForm');
     Route::post('/trades', [TradeController::class, 'createTrade'])->name('create');       // Create a new trade
     Route::post('/trades/{trade}/accept', [TradeController::class, 'acceptTrade'])->name('accept'); // Accept a trade
     Route::post('/trades/{trade}/decline', [TradeController::class, 'declineTrade'])->name('decline'); // Decline a trade

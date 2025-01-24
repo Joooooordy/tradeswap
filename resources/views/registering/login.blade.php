@@ -2,7 +2,7 @@
 <html lang="en">
 <body>
 
-@include('nav')
+@include('templates.nav')
 
 <div class="login">
     <a href="/" class="avatar">

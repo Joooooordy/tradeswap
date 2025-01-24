@@ -81,3 +81,62 @@
 .language select:hover {
     background-color: #444; /* Hover effect */
 }
+
+.trade-container {
+    max-width: 400px; /* Set max width for the container */
+    margin: 50px auto; /* Center the container */
+    padding: 20px; /* Padding around the container */
+    background-color: #fff; /* White background */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+}
+
+h2 {
+    text-align: center; /* Center align the title */
+    color: #333; /* Darker text color */
+    margin-bottom: 20px; /* Space below the title */
+}
+
+.trade-form-wrapper {
+    background: #f7f7f7; /* Light gray background for form */
+    border-radius: 8px; /* Rounded corners */
+    padding: 20px; /* Inner padding */
+}
+
+.form-group {
+    margin-bottom: 15px; /* Space between form groups */
+}
+
+label {
+    display: block; /* Full width for labels */
+    margin-bottom: 5px; /* Space below labels */
+    font-weight: bold; /* Bold font for labels */
+}
+
+.form-select {
+    width: 100%; /* Full width for select inputs */
+    padding: 10px; /* Padding inside the select */
+    border: 1px solid #ced4da; /* Border styling */
+    border-radius: 4px; /* Rounded corners */
+    background-color: #fff; /* White background */
+    color: #333; /* Dark text color */
+}
+
+.btn-custom {
+    background-color: #007bff; /* Primary color */
+    color: white; /* Button text color */
+    padding: 10px 20px; /* Button padding */
+    border: none; /* Remove border */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor */
+    transition: background-color 0.3s; /* Transition for hover effect */
+    display: inline-block; /* Inline-block for centering */
+}
+
+.btn-custom:hover {
+    background-color: #0056b3; /* Darker color on hover */
+}
+
+.text-center {
+    text-align: center; /* Center align the button */
+}

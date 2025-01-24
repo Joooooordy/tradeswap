@@ -37,6 +37,7 @@
     <div class="nav-wrapper">
         <div class="menu">
             <a href="/">Home</a>
+            <a href="/csgo/trade">Trade</a>
         </div>
 
         <div class="search-bar">

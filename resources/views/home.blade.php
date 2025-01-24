@@ -2,7 +2,7 @@
 <html lang="en">
 <body>
 
-@include('nav')
+@include('templates.nav')
 
 
 <div class="wrapper">
@@ -19,7 +19,7 @@
                         The best trading bot for instant trades with the lowest fees.
                     </div>
                     <div class="start-trading-button">
-                        <a href="#">Trade Items Now</a>
+                        <a href="/csgo/trade">Trade Items Now</a>
                         <p>Register now and get $5 bonus</p>
                     </div>
                 </div>
@@ -43,7 +43,7 @@
     </div>
 </div>
 
-@include('footer')
+@include('templates.footer')
 </body>
 </html>
 
