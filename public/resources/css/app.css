@@ -112,6 +112,7 @@ h1 {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     overflow: hidden;
     will-change: contents;
+    cursor: pointer;
 }
 
 .item h3 {
