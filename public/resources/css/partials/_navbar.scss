@@ -1,0 +1,101 @@
+@use '../partials/variables';
+
+/**********************************
+/ NAVBAR
+/**********************************
+ */
+
+.navbar {
+    max-height: 100%;
+    font-family: variables.$kanit;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: variables.$jet;
+    padding: 10px 20px;
+    width: 100%;
+
+    a {
+        color: variables.$white;
+        font-weight: bold;
+        padding: 14px 20px;
+        text-decoration: none;
+        text-align: center;
+
+        &:hover {
+            background-color: variables.$egg-white;
+            border-radius: 5px;
+            color: variables.$black;
+        }
+    }
+
+    a.active {
+        background-color: variables.$soft-white;
+        border-radius: 5px;
+        color: variables.$black;
+    }
+
+    .menu {
+        display: flex;
+        gap: 10px;
+    }
+
+    .login {
+        margin-left: auto;
+    }
+}
+
+h1 {
+    font-family: variables.$agency;
+    font-size: 65px;
+    text-align: left;
+}
+
+.search-bar {
+    text-align: center;
+
+    input[type="text"] {
+        font-family: variables.$kanit;
+        padding: 10px;
+        width: 500px;
+        font-size: 16px;
+        border: 3px solid white;
+        border-radius: 15px;
+    }
+
+    button {
+        position: relative;
+        background: white;
+        right: 10%;
+        top: 3%;
+        padding: 10px;
+        font-size: 16px;
+        color: variables.$black;
+        border: none;
+        border-radius: 15px;
+        cursor: pointer;
+    }
+}
+
+.suggestions-list {
+    margin-top: 8px;
+    border: 3px solid #ddd;
+    border-radius: 15px;
+    max-height: 310px;
+    position: absolute;
+    left: 30%;
+    background-color: variables.$white;
+    z-index: 1000;
+    width: 40%;
+    overflow: hidden;
+    display: none;
+
+    div {
+        padding: 10px;
+        cursor: pointer;
+
+        &:hover {
+            background-color: variables.$egg-white;
+        }
+    }
+}

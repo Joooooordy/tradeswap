@@ -1,0 +1,5 @@
+@use '../partials/variables';
+
+@function item-transition($duration, $timing-function) {
+    @return transform #{$duration} #{$timing-function}, box-shadow #{$duration} #{$timing-function};
+}

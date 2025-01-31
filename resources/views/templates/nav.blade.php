@@ -6,7 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>TradeSwap</title>
 
-    <link rel="stylesheet" href="{{ asset('/resources/css/app.css') }}">
+    @vite(['public/resources/css/app.scss', 'resources/js/app.js'])
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
     <link rel="stylesheet"
@@ -28,7 +28,6 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.js"
             integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-    <script src="{{ asset('/resources/js/app.js') }}"></script>
     <script src="{{ asset('/resources/js/ajax.js') }}"></script>
 </head>
 <body>

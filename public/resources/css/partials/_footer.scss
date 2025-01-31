@@ -1,0 +1,151 @@
+@use '../partials/variables';
+
+/**********************************
+/ FOOTER
+/**********************************/
+
+.footer {
+    background-color: variables.$jet;
+    font-family: variables.$kanit;
+    color: variables.$white;
+    padding: 40px 0;
+    box-shadow: 0 -1px 10px rgba(0, 0, 0, 0.2);
+
+    .footer-container {
+        margin: 0 auto;
+        padding: 0 15px;
+    }
+}
+
+.footer-top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-bottom: 1px solid #f7fafc;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+
+    .logo {
+        img {
+            width: 150px;
+            margin-bottom: 20px;
+        }
+    }
+}
+
+.logo {
+    h4 {
+        text-align: center;
+        font-size: 20px;
+    }
+}
+
+.social-links {
+    font-size: 25px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    will-change: contents;
+
+    a.youtube {
+        color: variables.$red;
+    }
+
+    a.twitter {
+        color: variables.$blue;
+    }
+
+    a.facebook {
+        color: variables.$dark_blue;
+    }
+
+    a.instagram {
+        color: variables.$pink;
+    }
+
+    a.discord {
+        color: variables.$dark_grey;
+    }
+
+    a.envelope {
+        color: variables.$light_white;
+    }
+
+    a {
+        display: inline-block;
+        transition: transform 0.2s ease;
+
+        &:hover {
+            transform: scale(1.175);
+        }
+    }
+
+    img {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+.footer-middle {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    margin-bottom: 40px;
+    align-items: flex-start;
+    flex-direction: row;
+
+    .links {
+        flex: 1;
+        text-align: center;
+    }
+}
+
+.links {
+    h4 {
+        margin-bottom: 15px;
+        font-size: 18px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: variables.$white;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+        text-align: center;
+
+        li {
+            margin-bottom: 10px;
+
+            a {
+                color: variables.$light_white;
+                text-decoration: none;
+                transition: color 0.3s ease;
+
+                &:hover {
+                    color: variables.$white;
+                }
+            }
+        }
+    }
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: variables.$light_white;
+    border-top: 1px solid #f7fafc;
+    padding-top: 10px;
+
+    a {
+        text-decoration: none;
+        color: variables.$white;
+    }
+}
+
+.payment-icons {
+    margin: 5px 0 0 0;
+    font-size: 25px;
+}
