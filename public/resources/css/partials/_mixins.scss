@@ -1,0 +1,69 @@
+@use "sass:math";
+@use "variables";
+
+// Default font family mixin
+@mixin font-family($font: variables.$default-font) {
+    font-family: $font, sans-serif;
+}
+
+// Default background with transparency
+@mixin background-transparent($color: variables.$default-bg, $opacity: 0.5) {
+    background: rgba($color, $opacity);
+}
+
+// Box styling mixin with default values
+@mixin box-style($width: 90%, $padding: 50px 20px 50px 20px, $margin: 0 auto, $box-sizing: border-box) {
+    width: $width;
+    margin: $margin;
+    padding: $padding;
+    box-sizing: $box-sizing;
+}
+
+@mixin box-style-items($gap: 20px, $width: 100%, $margin: 0 auto, $box-sizing: border-box) {
+    gap: $gap;
+    width: $width;
+    margin: $margin;
+    box-sizing: $box-sizing;
+}
+
+// Mixin for setting text styles
+@mixin text-style($size: 16px, $color: variables.$default-text) {
+    font-size: $size;
+    color: $color;
+
+}
+
+@mixin img-icon($max-width: 30%, $padding: 0 0 8px 0, $height: auto) {
+    max-width: $max-width;
+    padding: $padding;
+    height: $height;
+}
+
+@mixin item-showcase($width: 100%, $display: flex, $flex-direction: column, $align-items: center, $overflow: visible) {
+    width: $width;
+    display: $display;
+    flex-direction: $flex-direction;
+    align-items: $align-items;
+    overflow: $overflow;
+}
+
+@mixin item($background: variables.$nardogrey, $padding: 10px 10px 35px 10px,$border-radius: 8px) {
+    background: $background;
+    padding: $padding;
+    border-radius: $border-radius;
+}
+
+@mixin spinner($size: 1rem, $border-width: 0.15em, $margin-left: 8px) {
+    display: inline-block;
+    width: $size;
+    height: $size;
+    margin-left: $margin-left; // Space between text and spinner
+    vertical-align: middle;
+    border: $border-width solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.75s linear infinite;
+}
+
+
+

@@ -1,3 +1,4 @@
+//Colors
 $black: black;
 $soft_white: #edf2f7;
 $white: white;
@@ -10,12 +11,28 @@ $red: red;
 $dark_blue: #0056b3;
 $pink: #c7a1ff;
 $dark_grey: #4a5568;
+$blue_black: #16161d;
 $light_white: #cbd5e0;
-$davy-grey: #5A5A66;
-$jet: #333;
+$davy_grey: #5A5A66;
+$dim_grey: #696977;
+$grey: #787e87;
+$jet: #2A2B2E;
+$moonstone: #58A4B0;
+$cal-poly-green: #0F5715;
+$olive: #767522;
+$firebrick: #BB0A21;
+$bittersweet: #F9624E;
+$nardogrey: #BAC1B8;
 
+//Fonts
 $kanit: Kanit, serif;
 $arial: Arial, sans-serif;
 $agency: "Agency FB", serif;
 
+//Default variables
+$default-font: $kanit;
+$default-bg: $moonstone;
+$default-text: $black;
+
+//Inherit
 $inherit: inherit;

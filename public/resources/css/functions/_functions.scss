@@ -3,3 +3,8 @@
 @function item-transition($duration, $timing-function) {
     @return transform #{$duration} #{$timing-function}, box-shadow #{$duration} #{$timing-function};
 }
+
+@function text-transition($duration, $timing-function) {
+    @return transform #{$duration} #{$timing-function}, font-size #{$duration} #{$timing-function};
+}
+

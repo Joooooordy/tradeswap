@@ -1,12 +1,13 @@
 @use '../partials/variables';
+@use '../partials/mixins';
 
 /**********************************
 / FOOTER
 /**********************************/
 
 .footer {
-    background-color: variables.$jet;
-    font-family: variables.$kanit;
+    @include mixins.background-transparent();
+    @include mixins.font-family();
     color: variables.$white;
     padding: 40px 0;
     box-shadow: 0 -1px 10px rgba(0, 0, 0, 0.2);

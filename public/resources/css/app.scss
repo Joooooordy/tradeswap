@@ -1,6 +1,7 @@
 @use 'partials/variables';
 @use 'partials/navbar';
 @use 'partials/footer';
+@use "partials/mixins";
 @use 'functions/functions';
 
 
@@ -10,14 +11,14 @@
 
 html {
     max-height: 100%;
-    font-family: variables.$kanit;
+    @include mixins.font-family();
 }
 
 body {
     max-height: 100%;
-    font-family: variables.$kanit;
+    @include mixins.font-family();
     color: variables.$black;
-    background-color: variables.$davy-grey;
+    background-color: variables.$jet;
     margin: 0;
     padding: 0;
 }
@@ -29,38 +30,64 @@ body {
 
 .wrapper {
     max-height: 100%;
-    font-family: variables.$kanit;
-    width: 90%;
-    margin: 0 auto;
-    padding: 50px 20px 50px 20px;
-    box-sizing: border-box;
+    @include mixins.font-family();
+    @include mixins.box-style();
 }
+
+.additional-info-head {
+    @include mixins.box-style(55%, 30px 0 0 0);
+    color: variables.$white;
+}
+
+.info-wrapper {
+    @include mixins.box-style(55%, 20px);
+    @include mixins.background-transparent();
+    border-radius: 5px;
+
+    p {
+        @include mixins.text-style();
+    }
+
+    h2, h3 {
+        color: variables.$egg_white;
+    }
+
+    .text-content {
+        padding: 20px;
+
+        a {
+            text-decoration: none;
+            color: variables.$bittersweet;
+
+            span {
+                transition: functions.text-transition(0.2s, ease);
+
+                &:hover {
+                    transform: scale(1.05);
+                    font-size: 1.10em;
+                }
+            }
+        }
+    }
+}
+
 
 /**********************************
  * Item showcase
  **********************************/
 
 .item-showcase {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    overflow: visible;
+    @include mixins.item-showcase();
 }
 
 .items-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    width: 100%;
-    margin: 0 auto;
-    box-sizing: border-box;
+    @include mixins.box-style-items();
 }
 
 .item {
-    background: #BAC1B8;
-    padding: 10px 10px 35px 10px;
-    border-radius: 8px;
+   @include mixins.item();
     text-align: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: functions.item-transition(0.3s, ease);
@@ -86,12 +113,11 @@ body {
 }
 
 img.item-icon {
-    max-width: 30%;
-    padding-bottom: 8px;
-    height: auto;
+    @include mixins.img-icon();
 }
 
 .info-tainer {
+    @include mixins.box-style(55%);
     color: variables.$soft-white;
     padding: 10px;
 }
@@ -111,14 +137,14 @@ img.item-icon {
     padding: 30px 0 0 0;
 
     a {
-        background-color: variables.$blue;
+        background-color: variables.$dark_blue;
         color: variables.$white;
         padding: 10px 14px;
         text-decoration: none;
         border-radius: 5px;
 
         &:hover {
-            background-color: variables.$dark-blue;
+            background-color: variables.$blue;
         }
     }
 
@@ -148,15 +174,6 @@ img.item-icon {
     font-size: 16px;
 }
 
-.nav-wrapper {
-    width: 90%;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 0;
-}
-
 #account.active {
     background-color: variables.$soft-white;
     border-radius: 5px;
@@ -178,20 +195,20 @@ img.item-icon {
     max-width: 55%;
     padding: 70px 30px 44px;
     border-radius: 22px;
-    background: #BAC1B8;
+    @include mixins.background-transparent();
     text-align: center;
     color: variables.$white;
 
-    > h2 {
-        color: variables.$black;
+    h2 {
+        color: variables.$default-text;
         text-align: left;
-        font-family: variables.$kanit;
+        @include mixins.font-family();;
         font-size: 36px;
         font-weight: 500;
         margin: 0 0 30px;
     }
 
-    > h3 {
+    h3 {
         color: variables.$light_grey;
         margin: 0 0 30px;
         font-weight: 500;
@@ -229,22 +246,20 @@ img.item-icon {
         width: 100%;
         height: 60px;
         outline: none;
-        font-family: variables.$kanit;
+        @include mixins.font-family();;
         border-radius: 8px;
         background: transparent;
-        border: 2px solid #5A5A66;
+        border: 2px solid variables.$nardogrey;
         font-size: 18px;
         padding: 0 20px 0 50px;
-        color: variables.$inherit;
+        color: variables.$white;
+
+        &::placeholder {
+            color: variables.$white;
+        }
 
         &:focus {
-            border-color: variables.$teal;
-
-            ~ {
-                span {
-                    color: variables.$teal;
-                }
-            }
+            border-color: variables.$bittersweet;
         }
     }
 
@@ -253,7 +268,7 @@ img.item-icon {
         height: 60px;
         outline: none;
         padding: 0;
-        font-family: variables.$kanit;
+        @include mixins.font-family();;
         font-size: 16px;
         border-radius: 8px;
         cursor: pointer;
@@ -261,22 +276,21 @@ img.item-icon {
         color: variables.$egg_white;
         border: 0;
         font-weight: 600;
-        letter-spacing: 2px;
     }
 
     a {
-        color: variables.$blue;
+        color: variables.$bittersweet;
         font-size: 16px;
         text-align: left;
         text-decoration: none;
-        font-family: variables.$kanit;
+        @include mixins.font-family();;
     }
 }
 
 .textbox {
     width: 100%;
     position: relative;
-    font-family: variables.$kanit;
+    @include mixins.font-family();;
 
     span {
         position: absolute;
@@ -285,6 +299,18 @@ img.item-icon {
         translate: 0 -50%;
     }
 }
+
+.spinner-border {
+    @include mixins.spinner(1rem, 0.15em, 8px);
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+
 
 /**********************************
 / REGISTER PAGE

@@ -9,7 +9,12 @@ $(document).ready(function () {
     function handleFormSubmission(form) {
         event.preventDefault(); // Prevent form from submitting the default way
 
-        var formData = $(form).serialize(); // Serialize form data
+        const formData = $(form).serialize(); // Serialize form data
+        const submitButton = $(form).find("button[type='submit']"); // Get submit button
+        const originalButtonText = submitButton.html(); // Store original button text
+
+        // Add spinner and disable button
+        submitButton.html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Logging in...').prop("disabled", true);
 
         $.ajax({
             url: $(form).attr('action'),
@@ -19,40 +24,37 @@ $(document).ready(function () {
                 window.location.href = response.redirect;
             },
             error: function (xhr) {
-                // Check if there are any errors in the response
                 if (xhr.responseJSON && xhr.responseJSON.errors) {
-                    // Handle validation errors
                     var errors = xhr.responseJSON.errors;
                     var errorList = '';
 
-                    // Loop through errors and append them to the error list
                     $.each(errors, function (key, value) {
                         errorList += '<li>' + value + '</li>'; // Ensure to access the value directly
                     });
 
-                    // Insert error list into the error alert
                     $('#errorMessages').html(errorList);
-
-                    // Show the error alert
                     $('#errorAlert').fadeIn();
 
-                    // Hide the error alert after 5 seconds
                     setTimeout(function () {
                         $('#errorAlert').fadeOut();
                     }, 5000);
                 } else {
-                    // Handle any other unexpected errors
                     $('#errorMessages').html('<li>An unexpected error occurred.</li>');
                     $('#errorAlert').fadeIn();
                 }
+            },
+            complete: function () {
+                // Restore button text and re-enable it after request is complete
+                submitButton.html(originalButtonText).prop("disabled", false);
             }
         });
     }
 
-    // Bind form submission to the handler
+// Bind form submission to the handler
     $('#register-form, #login-form').on('submit', function (event) {
-        handleFormSubmission(this); // Pass the current form
+        handleFormSubmission(this);
     });
+
 
     // Search bar
     const predictiveSearchUrl = "/search/predictive";
