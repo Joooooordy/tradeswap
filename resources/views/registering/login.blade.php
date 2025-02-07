@@ -9,8 +9,6 @@
         <img src="apple-touch-icon.png" alt="avatar">
     </a>
 
-    <h2>Login</h2>
-
     <form id="login-form" class="login-form" action="{{ route('login') }}" method="POST">
         @csrf
         <div class="textbox">

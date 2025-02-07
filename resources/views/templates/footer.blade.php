@@ -24,7 +24,7 @@
                     <li><a href="#">Bug Bounty</a></li>
                     <li><a href="#">We Are Hiring</a></li>
                     <li><a href="#">Invest Now</a></li>
-                    <li><a href="#">Help Center</a></li>
+                    <li><a href="/faq">F.A.Q.</a></li>
                     <li><a href="#">Contact Us</a></li>
                     <li><a href="#">About Us</a></li>
                 </ul>
