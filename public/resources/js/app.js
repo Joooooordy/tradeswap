@@ -33,9 +33,9 @@ $(document).ready(function () {
     });
 
     // ***************************//
-    // CHECK IF CURRENT URL IS /LOGIN//
+    // CHECK IF CURRENT URL IS /LOGIN OR /REGISTER//
     //***************************//
-    if (window.location.pathname.endsWith('/login')) {
+    if (window.location.pathname.endsWith('/login') || window.location.pathname.endsWith('/register') ) {
         // Hide the navbar
         console.log(window.location.pathname)
         $('.navbar').hide();

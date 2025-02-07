@@ -5,9 +5,9 @@
 @include('templates.nav')
 
 <div class="register">
-    <div class="avatar">
+    <a href="/" class="avatar">
         <img src="/images/avatar.png" alt="avatar"/>
-    </div>
+    </a>
     <h2>Register</h2>
 
     <form class="register-form" id="register-form" action="{{ route('register') }}" method="POST">
@@ -30,8 +30,14 @@
             </label>
             <span class="material-symbols-outlined"> lock </span>
         </div>
-        <button type="submit">REGISTER</button>
-        <a href="/login">Login?</a>
+        <div class="textbox">
+            <label>
+                <input type="password" name="password_confirmation" placeholder="Confirm Password" required/>
+            </label>
+            <span class="material-symbols-outlined"> lock </span>
+        </div>
+        <button type="submit">Register</button>
+        <a href="/login">Already have an account? Login here</a>
     </form>
 
     <div class="alert-bottom" id="errorAlert">

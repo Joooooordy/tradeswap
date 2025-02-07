@@ -5,16 +5,19 @@ $(document).ready(function () {
         }
     });
 
-    // Function to handle form submission
+    // Function to handle form submission for login/registering
     function handleFormSubmission(form) {
-        event.preventDefault(); // Prevent form from submitting the default way
+        event.preventDefault(); // Prevent default form submission
 
         const formData = $(form).serialize(); // Serialize form data
         const submitButton = $(form).find("button[type='submit']"); // Get submit button
         const originalButtonText = submitButton.html(); // Store original button text
 
-        // Add spinner and disable button
-        submitButton.html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Logging in...').prop("disabled", true);
+        // Determine button text based on form ID or action
+        const actionText = $(form).attr('id') === "login-form" ? "Logging in" : "Registering";
+
+        // Add spinner after the text and disable button
+        submitButton.html(actionText + ' <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>').prop("disabled", true);
 
         $.ajax({
             url: $(form).attr('action'),
@@ -29,7 +32,7 @@ $(document).ready(function () {
                     var errorList = '';
 
                     $.each(errors, function (key, value) {
-                        errorList += '<li>' + value + '</li>'; // Ensure to access the value directly
+                        errorList += '<li>' + value + '</li>';
                     });
 
                     $('#errorMessages').html(errorList);
@@ -44,16 +47,17 @@ $(document).ready(function () {
                 }
             },
             complete: function () {
-                // Restore button text and re-enable it after request is complete
+                // Restore original button text and enable button
                 submitButton.html(originalButtonText).prop("disabled", false);
             }
         });
     }
 
-// Bind form submission to the handler
+    // Bind form submission to the handler
     $('#register-form, #login-form').on('submit', function (event) {
         handleFormSubmission(this);
     });
+
 
 
     // Search bar
@@ -185,6 +189,37 @@ $(document).ready(function () {
                     icon: 'error',
                     confirmButtonText: 'OK'
                 });
+            }
+        });
+    });
+
+    //logout functionality
+    $('#logout-link').on('click', function(event) {
+        event.preventDefault();  // Prevent default link behavior
+
+        // Perform AJAX POST request to logout immediately
+        $.ajax({
+            url: $(this).data('logout-url'),
+            method: 'POST',
+            success: function(response) {
+                // Show success message and redirect
+                Swal.fire({
+                    title: 'Logged out!',
+                    text: 'You have been logged out successfully.',
+                    icon: 'success',
+                    timer: 1500, // Auto-close after 1.5 seconds
+                    showConfirmButton: false
+                }).then(() => {
+                    window.location.href = $('#logout-link').data('home-url');
+                });
+            },
+            error: function(xhr, status, error) {
+                // Show error message if logout fails
+                Swal.fire(
+                    'Error!',
+                    'There was an issue logging you out.',
+                    'error'
+                );
             }
         });
     });

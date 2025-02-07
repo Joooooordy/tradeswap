@@ -47,6 +47,7 @@ class RegisterController extends Controller
                 'required',
                 'string',
                 'min:8',
+                'confirmed',
             ]
         ]);
 
@@ -69,6 +70,7 @@ class RegisterController extends Controller
         $user = User::create([
             'name' => $credentials['username'],
             'email' => $credentials['email'],
+            'email_verified_at' => now(),
             'password' => $credentials['password'],
             'remember_token' => Str::random(60),
             'last_login_at' => Carbon::now(),

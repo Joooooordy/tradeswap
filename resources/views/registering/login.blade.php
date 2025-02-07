@@ -25,7 +25,7 @@
         </div>
         <button type="submit">Login</button>
         <a href="#">Forgot your credentials?</a>
-        <a href="/register">Register?</a>
+        <a href="/register">No account? Register here</a>
     </form>
 
     <div class="alert-bottom" id="errorAlert">

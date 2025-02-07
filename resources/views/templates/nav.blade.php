@@ -31,6 +31,7 @@
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf
                     </form>
+                    <a href="#" id="logout-link" data-logout-url="{{ route('logout') }}" data-home-url="{{ route('home') }}">Logout</a>
                 </div>
             </div>
         @else

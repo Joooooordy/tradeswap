@@ -202,7 +202,7 @@ img.item-icon {
     h2 {
         color: variables.$default-text;
         text-align: left;
-        @include mixins.font-family();;
+        @include mixins.font-family();
         font-size: 36px;
         font-weight: 500;
         margin: 0 0 30px;
@@ -259,7 +259,7 @@ img.item-icon {
         }
 
         &:focus {
-            border-color: variables.$bittersweet;
+            border-color: variables.$egg_white;
         }
     }
 
@@ -276,6 +276,10 @@ img.item-icon {
         color: variables.$egg_white;
         border: 0;
         font-weight: 600;
+
+        &:hover {
+            background: variables.$dark_blue;
+        }
     }
 
     a {
@@ -323,14 +327,16 @@ img.item-icon {
     top: 50%;
     left: 50%;
     translate: -50% -50%;
-    width: 90%;
+    min-width: 25%;
+    max-width: 55%;
     padding: 70px 30px 44px;
     border-radius: 22px;
-    background: #161616;
+    @include mixins.background-transparent();
     text-align: center;
     color: variables.$white;
 
     > h2 {
+        @include mixins.font-family();
         font-size: 36px;
         font-weight: 500;
         margin: 0 0 30px;
@@ -358,19 +364,17 @@ img.item-icon {
         font-family: variables.$inherit;
         border-radius: 8px;
         background: transparent;
-        border: 2px solid rgba(255, 255, 255, 0.1);
+        border: 2px solid variables.$nardogrey;
         font-size: 18px;
         padding: 0 20px 0 50px;
         color: variables.$inherit;
 
-        &:focus {
-            border-color: variables.$blue;
+        &::placeholder {
+            color: variables.$white;
+        }
 
-            ~ {
-                span {
-                    color: variables.$blue;
-                }
-            }
+        &:focus {
+            border-color: variables.$egg_white;
         }
     }
 
@@ -387,11 +391,14 @@ img.item-icon {
         color: variables.$egg_white;
         border: 0;
         font-weight: 600;
-        letter-spacing: 2px;
+
+        &:hover {
+            background: variables.$dark_blue;
+        }
     }
 
     a {
-        color: variables.$blue;
+        color: variables.$bittersweet;
         font-size: 16px;
         text-align: left;
         text-decoration: none;
