@@ -11,17 +11,17 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('home');
-});
+})->name('home');
 
 Route::get('/login', function () {
     return view('registering.login');
 })->name('login');
 
 Route::get('/register', function() {
-    return view('register');
+    return view('registering.register');
 })->name('register');
 
-Route::get('/', [HomeController::class, 'index']);
+Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/search', [UserInventoryController::class, 'search'])->name('search');
 Route::get('/search/predictive', [UserInventoryController::class, 'predictiveSearch'])->name('search.predictive');
 Route::get('/faq', function () {
