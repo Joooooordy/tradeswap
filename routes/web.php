@@ -24,6 +24,9 @@ Route::get('/register', function() {
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/search', [UserInventoryController::class, 'search'])->name('search');
 Route::get('/search/predictive', [UserInventoryController::class, 'predictiveSearch'])->name('search.predictive');
+Route::get('/faq', function () {
+    return view('templates.faq');
+})->name('faq');
 
 //login functions
 Route::post('/register', [RegisterController::class, 'authenticate']);
