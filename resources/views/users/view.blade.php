@@ -17,6 +17,10 @@
                     <span>{{ $user->email }}</span>
                 </div>
                 <div class="group">
+                    <h4>Role:</h4>
+                    <span>{{ implode(', ', $user->getRoleNames()->toArray()) }}</span>
+                </div>
+                <div class="group">
                     <h4>User inventory:</h4>
                     <span>{{ count($user->userInventory) }} items</span>
                 </div>
