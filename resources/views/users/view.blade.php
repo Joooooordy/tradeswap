@@ -17,7 +17,7 @@
                     <span>{{ $user->email }}</span>
                 </div>
                 <div class="group">
-                    <h4>Role:</h4>
+                    <h4>Current Role:</h4>
                     <span>{{ implode(', ', $user->getRoleNames()->toArray()) }}</span>
                 </div>
                 <div class="group">
@@ -79,9 +79,9 @@
                                 <p>From user: {{$trade->sender->name}}</p>
                                 <div class="options">
                                     <a href="#" class="trade-action" id="yes"
-                                       data-href="{{ route('accept', ['trade' => $trade->id]) }}">Accept</a>
+                                       data-href="{{ route('accept', ['items' => $trade->id]) }}">Accept</a>
                                     <a href="#" class="trade-action" id="no"
-                                       data-href="{{ route('decline', ['trade' => $trade->id]) }}">Decline</a>
+                                       data-href="{{ route('decline', ['items' => $trade->id]) }}">Decline</a>
                                 </div>
                             </div>
                         @endif

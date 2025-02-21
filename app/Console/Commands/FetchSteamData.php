@@ -81,7 +81,7 @@ class FetchSteamData extends Command
                             $status = 'te koop'; // "for sale" in Dutch
                         } else {
                             $this->info("Item '{$item['market_name']}' is not tradable.");
-                            $status = 'te ruil'; // "for trade" in Dutch
+                            $status = 'te ruil'; // "for items" in Dutch
                         }
                     } else {
                         $this->info("The tradable key does not exist for item '{$item['market_name']}'.");
@@ -95,6 +95,7 @@ class FetchSteamData extends Command
                             'game' => 'Counter-Strike 2',
                             'rarity' => $rarity,
                             'status' => $status,
+                            'price' => mt_rand(1, 50000)/10,
                             'icon_url' => $icon,
                         ]);
                         $this->info("icon_url '$icon' found for item '{$item['market_name']}'.");

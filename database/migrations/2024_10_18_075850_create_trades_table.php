@@ -15,11 +15,11 @@ class CreateTradesTable extends Migration
     {
         Schema::create('trades', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('sender_id')->constrained('users')->onDelete('cascade');   // User who sends the trade
-            $table->foreignId('receiver_id')->constrained('users')->onDelete('cascade'); // User who receives the trade
+            $table->foreignId('sender_id')->constrained('users')->onDelete('cascade');   // User who sends the items
+            $table->foreignId('receiver_id')->constrained('users')->onDelete('cascade'); // User who receives the items
             $table->foreignId('sender_item_id')->constrained('user_inventories')->onDelete('cascade'); // Item being sent
             $table->foreignId('receiver_item_id')->nullable()->constrained('user_inventories')->onDelete('cascade'); // Item being traded back (can be null)
-            $table->enum('status', ['pending', 'accepted', 'declined'])->default('pending'); // trade status
+            $table->enum('status', ['pending', 'accepted', 'declined'])->default('pending'); // items status
             $table->timestamps();
         });
     }

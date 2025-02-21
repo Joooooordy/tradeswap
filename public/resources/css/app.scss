@@ -87,7 +87,7 @@ body {
 }
 
 .item {
-   @include mixins.item();
+    @include mixins.item();
     text-align: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: functions.item-transition(0.3s, ease);
@@ -315,7 +315,6 @@ img.item-icon {
 }
 
 
-
 /**********************************
 / REGISTER PAGE
 /**********************************
@@ -404,43 +403,6 @@ img.item-icon {
         text-decoration: none;
     }
 }
-
-/**********************************
-/ LOGOUT MENU
-/**********************************
- */
-
-.logout-menu {
-    position: relative;
-    display: inline-block;
-}
-
-.dropdown-content {
-    display: none;
-    border-radius: 5px;
-    position: absolute;
-    background-color: variables.$egg-white;
-    min-width: 200px;
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-    z-index: 1;
-    right: 0;
-
-    a {
-        color: variables.$black;
-        padding: 12px 16px;
-        text-decoration: none;
-        display: block;
-
-        &:hover {
-            background-color: variables.$soft-white;
-        }
-    }
-
-    p {
-        text-align: center;
-    }
-}
-
 /**********************************
 / PROFILE PAGE
 /**********************************
@@ -568,6 +530,51 @@ section.profile-skins {
 / TRADE PAGE
 /**********************************
  */
+
+/* Pagination */
+.pagination {
+    text-align: center;
+    margin: 20px 0;
+    color: variables.$white;
+
+    a {
+        display: inline-block;
+        padding: 10px 15px;
+        margin: 5px;
+        background-color: variables.$white;
+        border-radius: 5px;
+        text-decoration: none;
+        color: variables.$default-text;
+    }
+
+    a.active {
+        background-color: variables.$default-bg;
+        color: white;
+    }
+
+    a:hover {
+        background-color: variables.$default-bg;
+        color: white;
+    }
+
+    svg {
+        width: 20px;
+        height: 20px;
+        vertical-align: center;
+    }
+
+    span.relative.inline-flex.items-center.px-2.py-2.text-sm.font-medium.text-gray-500.bg-white.border.border-gray-300.cursor-default.rounded-l-md.leading-5.dark\:bg-gray-800.dark\:border-gray-600 {
+        display: none !important;
+    }
+
+    a.relative.inline-flex.items-center.px-2.py-2.-ml-px.text-sm.font-medium.text-gray-500.bg-white.border.border-gray-300.rounded-r-md.leading-5.hover\:text-gray-400.focus\:z-10.focus\:outline-none.focus\:ring.ring-gray-300.focus\:border-blue-300.active\:bg-gray-100.active\:text-gray-500.transition.ease-in-out.duration-150.dark\:bg-gray-800.dark\:border-gray-600.dark\:active\:bg-gray-700.dark\:focus\:border-blue-800 {
+        display: none !important;
+    }
+
+    a.relative.inline-flex.items-center.px-2.py-2.text-sm.font-medium.text-gray-500.bg-white.border.border-gray-300.rounded-l-md.leading-5.hover\:text-gray-400.focus\:z-10.focus\:outline-none.focus\:ring.ring-gray-300.focus\:border-blue-300.active\:bg-gray-100.active\:text-gray-500.transition.ease-in-out.duration-150.dark\:bg-gray-800.dark\:border-gray-600.dark\:active\:bg-gray-700.dark\:focus\:border-blue-800 {
+        display: none !important;
+    }
+}
 
 .trade {
     background-color: variables.$egg-white;

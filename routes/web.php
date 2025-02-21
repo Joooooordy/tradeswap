@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Livewire\Cart;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ListController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\RegisterController;
@@ -13,14 +15,6 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
-Route::get('/login', function () {
-    return view('registering.login');
-})->name('login');
-
-Route::get('/register', function() {
-    return view('registering.register');
-})->name('register');
-
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/search', [UserInventoryController::class, 'search'])->name('search');
 Route::get('/search/predictive', [UserInventoryController::class, 'predictiveSearch'])->name('search.predictive');
@@ -29,20 +23,29 @@ Route::get('/faq', function () {
 })->name('faq');
 
 //login functions
+Route::get('/login', function () {return view('registering.login');})->name('login');
+Route::post('/login', [LoginController::class, 'authenticate']);
+Route::get('/register', function() {return view('registering.register');})->name('register');
 Route::post('/register', [RegisterController::class, 'authenticate']);
+
 Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
-Route::post('/login', [LoginController::class, 'authenticate'])->name('login');
 
 //account page
-Route::get('users/{id}', [UserController::class, 'show'])->name('profile');
+Route::get('account/overzicht/{id}', [UserController::class, 'show'])->name('profile');
 
-//trading routes
-Route::get('/csgo/trade', [TradeController::class, 'showTrade'])->name('showTrade');
+//shop routes
+Route::get('/shop', [UserInventoryController::class, 'showItems'])->name('showItems');
+Route::post('/shop', [UserInventoryController::class, 'showItems'])->name('showItems');
+Route::get('/check-providers', [UserInventoryController::class, 'testCookie']);
+
+
+//shopping cart
+Route::get('/cart', Cart::class)->name('cart');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/trade/items/{user}', [TradeController::class, 'getUserItems'])->name('getUserItems');
-    Route::post('/trades', [TradeController::class, 'createTrade'])->name('create');       // Create a new trade
-    Route::post('/trades/{trade}/accept', [TradeController::class, 'acceptTrade'])->name('accept'); // Accept a trade
-    Route::post('/trades/{trade}/decline', [TradeController::class, 'declineTrade'])->name('decline'); // Decline a trade
+    Route::get('/items/items/{user}', [TradeController::class, 'getUserItems'])->name('getUserItems');
+    Route::post('/trades', [TradeController::class, 'createTrade'])->name('create');       // Create a new items
+    Route::post('/trades/{items}/accept', [TradeController::class, 'acceptTrade'])->name('accept'); // Accept a items
+    Route::post('/trades/{items}/decline', [TradeController::class, 'declineTrade'])->name('decline'); // Decline a items
 });
 

@@ -15,7 +15,7 @@ class TradeController extends Controller
     public function showTrade(){
         $all_items = UserInventory::inRandomOrder()->paginate(20);
 
-        return view('trade.items', compact('all_items'));
+        return view('items.items', compact('all_items'));
     }
 
 //    public function getUserItems($userId)
@@ -47,11 +47,11 @@ class TradeController extends Controller
 //            $query->where('id', $currentUserId);
 //        })->get(['id', 'item_name']);
 //
-//        return view('trade.create', compact('item', 'trader', 'traderItems', 'userItems'));
+//        return view('items.create', compact('item', 'trader', 'traderItems', 'userItems'));
 //    }
 //
 //
-//    // Create a new trade
+//    // Create a new items
 //    public function createTrade(Request $request)
 //    {
 //        // Validate the request
@@ -65,10 +65,10 @@ class TradeController extends Controller
 //        $sender_id = Auth::id();
 //
 //        if ($validated['receiver_id'] == $sender_id) {
-//            return response()->json(['error' => 'You cannot trade with yourself'], 403);
+//            return response()->json(['error' => 'You cannot items with yourself'], 403);
 //        }
 //
-//        // Check if the sender owns the item they are trying to trade
+//        // Check if the sender owns the item they are trying to items
 //        $senderItem = UserInventory::where('id', $validated['sender_item_id'])
 //            ->where('user_id', $sender_id)
 //            ->first();
@@ -77,7 +77,7 @@ class TradeController extends Controller
 //            return response()->json(['error' => 'You do not own this item'], 403);
 //        }
 //
-//        // Create the trade
+//        // Create the items
 //        Trade::create([
 //            'sender_id' => $sender_id,
 //            'receiver_id' => $validated['receiver_id'],
@@ -92,72 +92,72 @@ class TradeController extends Controller
 //        ], 201);
 //    }
 //
-//    // Accept a trade
+//    // Accept a items
 //    public function acceptTrade($trade_id)
 //    {
-//        // Find the trade by ID and ensure it's pending
-//        $trade = Trade::where('id', $trade_id)
+//        // Find the items by ID and ensure it's pending
+//        $items = Trade::where('id', $trade_id)
 //            ->where('status', 'pending')
 //            ->first();
 //
-//        if (!$trade) {
-//            return response()->json(['error' => 'trade not found or already processed'], 404);
+//        if (!$items) {
+//            return response()->json(['error' => 'items not found or already processed'], 404);
 //        }
 //
-//        // Ensure the authenticated user is the receiver of the trade
-//        if (Auth::id() !== $trade->receiver_id) {
-//            return response()->json(['error' => 'You are not authorized to accept this trade'], 403);
+//        // Ensure the authenticated user is the receiver of the items
+//        if (Auth::id() !== $items->receiver_id) {
+//            return response()->json(['error' => 'You are not authorized to accept this items'], 403);
 //        }
 //
 //        // Swap items between sender and receiver
-//        $this->swapItems($trade);
+//        $this->swapItems($items);
 //
-//        // Update the trade status to accepted
-//        $trade->update(['status' => 'accepted']);
+//        // Update the items status to accepted
+//        $items->update(['status' => 'accepted']);
 //
 //        return response()->json([
 //            'message' => 'Trade accepted!',
-//            'trade' => $trade
+//            'items' => $items
 //        ]);
 //    }
 //
 //    // Helper method to swap the items
-//    protected function swapItems(Trade $trade)
+//    protected function swapItems(Trade $items)
 //    {
 //        // Swap the ownership of sender's item to receiver
-//        $senderItem = UserInventory::find($trade->sender_item_id);
-//        $senderItem->update(['user_id' => $trade->receiver_id]);
+//        $senderItem = UserInventory::find($items->sender_item_id);
+//        $senderItem->update(['user_id' => $items->receiver_id]);
 //
 //        // If the receiver offered an item, swap ownership to sender
-//        if ($trade->receiver_item_id) {
-//            $receiverItem = UserInventory::find($trade->receiver_item_id);
-//            $receiverItem->update(['user_id' => $trade->sender_id]);
+//        if ($items->receiver_item_id) {
+//            $receiverItem = UserInventory::find($items->receiver_item_id);
+//            $receiverItem->update(['user_id' => $items->sender_id]);
 //        }
 //    }
 //
-//    // Decline a trade
+//    // Decline a items
 //    public function declineTrade($trade_id)
 //    {
-//        // Find the trade by ID and ensure it's pending
-//        $trade = Trade::where('id', $trade_id)
+//        // Find the items by ID and ensure it's pending
+//        $items = Trade::where('id', $trade_id)
 //            ->where('status', 'pending')
 //            ->first();
 //
-//        if (!$trade) {
-//            return response()->json(['error' => 'trade not found or already processed'], 404);
+//        if (!$items) {
+//            return response()->json(['error' => 'items not found or already processed'], 404);
 //        }
 //
-//        // Ensure the authenticated user is the receiver of the trade
-//        if (Auth::id() !== $trade->receiver_id) {
-//            return response()->json(['error' => 'You are not authorized to decline this trade'], 403);
+//        // Ensure the authenticated user is the receiver of the items
+//        if (Auth::id() !== $items->receiver_id) {
+//            return response()->json(['error' => 'You are not authorized to decline this items'], 403);
 //        }
 //
-//        // Update the trade status to declined
-//        $trade->update(['status' => 'declined']);
+//        // Update the items status to declined
+//        $items->update(['status' => 'declined']);
 //
 //        return response()->json([
 //            'message' => 'Trade declined!',
-//            'trade' => $trade
+//            'items' => $items
 //        ]);
 //    }
 }

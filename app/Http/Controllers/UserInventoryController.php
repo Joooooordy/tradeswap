@@ -51,5 +51,13 @@ class UserInventoryController extends Controller
 
         return response()->json($results);
     }
+
+    public function showItems(){
+        $all_items = UserInventory::inRandomOrder()->paginate(20);
+
+        return view('livewire.items', compact('all_items'));
+    }
+
+
 }
 

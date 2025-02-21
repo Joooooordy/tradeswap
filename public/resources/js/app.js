@@ -37,7 +37,6 @@ $(document).ready(function () {
     //***************************//
     if (window.location.pathname.endsWith('/login') || window.location.pathname.endsWith('/register') ) {
         // Hide the navbar
-        console.log(window.location.pathname)
         $('.navbar').hide();
     }
 });

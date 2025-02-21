@@ -6,7 +6,7 @@
     <div class="nav-wrapper">
         <div class="menu">
             <a href="/">Home</a>
-            <a href="/csgo/trade">Trade</a>
+            <a href="/shop">Shop</a>
         </div>
 
         <div class="search-bar">
@@ -21,24 +21,36 @@
             </form>
         </div>
 
-        @auth
-            <div class="logout-menu">
-                <span class="material-symbols-outlined" id="account">person</span>
+        <div class="shopping">
+            @auth
+                <div class="logout-menu">
+                    <span class="material-symbols-outlined" id="account">person</span>
 
-                <div id="dropdownMenu" class="dropdown-content">
-                    <p>Hallo {{ucfirst(Auth::user()->name)}}</p>
-                    <a href="{{ route('profile', ['id' => Auth::user()->id]) }}">Account</a>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        @csrf
-                    </form>
-                    <a href="#" id="logout-link" data-logout-url="{{ route('logout') }}" data-home-url="{{ route('home') }}">Logout</a>
+                    <div id="dropdownMenu" class="dropdown-content">
+                        <p>Hallo {{ucfirst(Auth::user()->name)}}</p>
+                        <a href="{{ route('profile', ['id' => Auth::user()->id]) }}">Account</a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                        <a href="#" id="logout-link" data-logout-url="{{ route('logout') }}"
+                           data-home-url="{{ route('home') }}">Logout</a>
+                    </div>
                 </div>
+            @else
+                <div class="login-page">
+                    <a href="/login">Login</a>
+                </div>
+            @endauth
+
+                <a href="/cart" class="shopping-cart">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                </a>
+
+                <a href="/wishlist" class="wishlist">
+                    <i class="fa-solid fa-heart"></i>
+                </a>
             </div>
-        @else
-            <div class="login-page">
-                <a href="/login">Login</a>
-            </div>
-        @endauth
+        </div>
     </div>
 </div>
 </body>

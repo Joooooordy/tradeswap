@@ -28,8 +28,8 @@ $(document).ready(function () {
             },
             error: function (xhr) {
                 if (xhr.responseJSON && xhr.responseJSON.errors) {
-                    var errors = xhr.responseJSON.errors;
-                    var errorList = '';
+                    const errors = xhr.responseJSON.errors;
+                    let errorList = '';
 
                     $.each(errors, function (key, value) {
                         errorList += '<li>' + value + '</li>';
@@ -99,99 +99,99 @@ $(document).ready(function () {
         }
     });
 
-    //Trade page
-    $('#receiver_id').change(function () {
-        let userId = $(this).val(); // Get the selected user ID
-
-        // Make an AJAX call to get items for the selected user
-        $.ajax({
-            url: '/trade/items/' + userId, // Ensure this URL matches your route
-            type: 'GET',
-            success: function (data) {
-                let itemsSelect = $('#receiver_item_id');
-                itemsSelect.empty(); // Clear current options
-                itemsSelect.append('<option value="">No item</option>'); // Default option
-
-                // Append new options
-                $.each(data.items, function (index, item) {
-                    itemsSelect.append('<option value="' + item.id + '">' + item.item_name + '</option>');
-                });
-            },
-            error: function (xhr) {
-                console.error(xhr.responseText); // Handle errors if needed
-            }
-        });
-    });
-
-    // success or fail submitting trade request
-    $('.trade-form').on('submit', function (event) {
-        event.preventDefault(); // Prevent the default form submission
-
-        // Get form data
-        let formData = $(this).serialize(); // Serialize the form data
-
-        // Make AJAX call to create the trade
-        $.ajax({
-            url: $(this).attr('action'), // The form's action attribute
-            type: 'POST',
-            data: formData,
-            success: function (response) {
-                // Show success alert
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Success!',
-                    text: response.message,
-                    confirmButtonText: 'OK'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // Redirect to profile page
-                        window.location.href = response.redirect_url;
-                    }
-                });
-            },
-            error: function (xhr) {
-                // Show error alert
-                let errorMessage = xhr.responseJSON?.error || 'An error occurred.';
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error!',
-                    text: errorMessage,
-                    confirmButtonText: 'OK'
-                });
-            }
-        });
-    });
-
-    // Actual trading here
-    $('.trade-action').on('click', function (event) {
-        event.preventDefault(); // Prevent default link behavior
-
-        const url = $(this).data('href');
-
-        $.ajax({
-            url: url,
-            type: 'POST',
-            success: function (response) {
-                Swal.fire({
-                    title: 'Success!',
-                    text: response.message,
-                    icon: 'success',
-                    confirmButtonText: 'OK'
-                }).then(() => {
-                    location.reload(); // Reload after user clicks 'OK'
-                });
-            },
-            error: function (xhr) {
-                console.error("Error details:", xhr.responseText);
-                Swal.fire({
-                    title: `Error ${xhr.status}`,
-                    text: xhr.responseText || 'An error occurred. Please try again.',
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                });
-            }
-        });
-    });
+    // //Trade page
+    // $('#receiver_id').change(function () {
+    //     let userId = $(this).val(); // Get the selected user ID
+    //
+    //     // Make an AJAX call to get items for the selected user
+    //     $.ajax({
+    //         url: '/items/items/' + userId, // Ensure this URL matches your route
+    //         type: 'GET',
+    //         success: function (data) {
+    //             let itemsSelect = $('#receiver_item_id');
+    //             itemsSelect.empty(); // Clear current options
+    //             itemsSelect.append('<option value="">No item</option>'); // Default option
+    //
+    //             // Append new options
+    //             $.each(data.items, function (index, item) {
+    //                 itemsSelect.append('<option value="' + item.id + '">' + item.item_name + '</option>');
+    //             });
+    //         },
+    //         error: function (xhr) {
+    //             console.error(xhr.responseText); // Handle errors if needed
+    //         }
+    //     });
+    // });
+    //
+    // // success or fail submitting items request
+    // $('.items-form').on('submit', function (event) {
+    //     event.preventDefault(); // Prevent the default form submission
+    //
+    //     // Get form data
+    //     let formData = $(this).serialize(); // Serialize the form data
+    //
+    //     // Make AJAX call to create the items
+    //     $.ajax({
+    //         url: $(this).attr('action'), // The form's action attribute
+    //         type: 'POST',
+    //         data: formData,
+    //         success: function (response) {
+    //             // Show success alert
+    //             Swal.fire({
+    //                 icon: 'success',
+    //                 title: 'Success!',
+    //                 text: response.message,
+    //                 confirmButtonText: 'OK'
+    //             }).then((result) => {
+    //                 if (result.isConfirmed) {
+    //                     // Redirect to profile page
+    //                     window.location.href = response.redirect_url;
+    //                 }
+    //             });
+    //         },
+    //         error: function (xhr) {
+    //             // Show error alert
+    //             let errorMessage = xhr.responseJSON?.error || 'An error occurred.';
+    //             Swal.fire({
+    //                 icon: 'error',
+    //                 title: 'Error!',
+    //                 text: errorMessage,
+    //                 confirmButtonText: 'OK'
+    //             });
+    //         }
+    //     });
+    // });
+    //
+    // // Actual trading here
+    // $('.items-action').on('click', function (event) {
+    //     event.preventDefault(); // Prevent default link behavior
+    //
+    //     const url = $(this).data('href');
+    //
+    //     $.ajax({
+    //         url: url,
+    //         type: 'POST',
+    //         success: function (response) {
+    //             Swal.fire({
+    //                 title: 'Success!',
+    //                 text: response.message,
+    //                 icon: 'success',
+    //                 confirmButtonText: 'OK'
+    //             }).then(() => {
+    //                 location.reload(); // Reload after user clicks 'OK'
+    //             });
+    //         },
+    //         error: function (xhr) {
+    //             console.error("Error details:", xhr.responseText);
+    //             Swal.fire({
+    //                 title: `Error ${xhr.status}`,
+    //                 text: xhr.responseText || 'An error occurred. Please try again.',
+    //                 icon: 'error',
+    //                 confirmButtonText: 'OK'
+    //             });
+    //         }
+    //     });
+    // });
 
     //logout functionality
     $('#logout-link').on('click', function(event) {
@@ -207,7 +207,7 @@ $(document).ready(function () {
                     title: 'Logged out!',
                     text: 'You have been logged out successfully.',
                     icon: 'success',
-                    timer: 1500, // Auto-close after 1.5 seconds
+                    timer: 2000, // Auto-close after 2 seconds
                     showConfirmButton: false
                 }).then(() => {
                     window.location.href = $('#logout-link').data('home-url');

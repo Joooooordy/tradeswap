@@ -17,8 +17,8 @@
             The best trading bot for instant trades with the lowest fees.
         </div>
         <div class="start-trading-button">
-            <a href="/csgo/trade">Trade Items Now</a>
-            <p>Register now and get $5 bonus</p>
+            <a href="/csgo/shop">Shop Items Now</a>
+            <p>Register now and get a $5 discount on items over $25</p>
         </div>
     </div>
 
