@@ -107,6 +107,44 @@ $(document).ready(function () {
         }
     });
 
+    // Cart
+    $(".update-cart").change(function (e) {
+        e.preventDefault();
+
+        var ele = $(this);
+
+        $.ajax({
+            url: '/cart/update-cart',
+            method: "patch",
+            data: {
+                id: ele.parents("tr").attr("data-id"),
+                quantity: ele.parents("tr").find(".quantity").val()
+            },
+            success: function (response) {
+                window.location.reload();
+            }
+        });
+    });
+
+    $(".remove-from-cart").click(function (e) {
+        e.preventDefault();
+
+        var ele = $(this);
+
+        if (confirm("Are you sure want to remove?")) {
+            $.ajax({
+                url: '/cart/remove-from-cart',
+                method: "DELETE",
+                data: {
+                    id: ele.parents("tr").attr("data-id")
+                },
+                success: function (response) {
+                    window.location.reload();
+                }
+            });
+        }
+    });
+
     // //Trade page
     // $('#receiver_id').change(function () {
     //     let userId = $(this).val(); // Get the selected user ID

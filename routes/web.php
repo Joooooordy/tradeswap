@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Livewire\Cart;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ListController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
@@ -9,6 +9,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\TradeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserInventoryController;
+use Illuminate\Auth\Middleware\Authenticate;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -30,21 +31,28 @@ Route::post('/register', [RegisterController::class, 'authenticate']);
 
 Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 
-//account page
-Route::get('account/overzicht/{id}', [UserController::class, 'show'])->name('profile');
-
 //shop routes
 Route::get('/shop', [UserInventoryController::class, 'showItems'])->name('showItems');
 Route::get('/check-providers', [UserInventoryController::class, 'testCookie']);
 
 
 //shopping cart
+Route::get('cart', [ItemController::class, 'cart'])->name('cart');
+Route::prefix('cart')->group(function () {
+    Route::get('add-to-cart/{id}', [ItemController::class, 'addToCart'])->name('addToCart');
+    Route::patch('update-cart', [ItemController::class, 'update'])->name('updateCart');
+    Route::delete('remove-from-cart', [ItemController::class, 'remove'])->name('removeFromCart');
+});
 
 
-Route::middleware('auth')->group(function () {
+
+Route::middleware([Authenticate::class, 'auth'])->group(function () {
     Route::get('/items/items/{user}', [TradeController::class, 'getUserItems'])->name('getUserItems');
     Route::post('/trades', [TradeController::class, 'createTrade'])->name('create');       // Create a new items
     Route::post('/trades/{items}/accept', [TradeController::class, 'acceptTrade'])->name('accept'); // Accept a items
     Route::post('/trades/{items}/decline', [TradeController::class, 'declineTrade'])->name('decline'); // Decline a items
+
+    //account page
+    Route::get('account/overzicht/{id}', [UserController::class, 'show'])->name('profile');
 });
 

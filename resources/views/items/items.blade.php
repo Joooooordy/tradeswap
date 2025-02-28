@@ -12,8 +12,9 @@
                         <h3>{{ $item->item_name }}</h3>
                         <p>Game: {{ $item->game }}</p>
                         <p>Rarity: {{ $item->rarity }}</p>
-                        <p>Status: {{ $item->status }}</p>
+                        <p>Price: € {{ $item->price }}</p>
                         <p>Sold by: {{ $item->user->name }}</p>
+                        <a href="{{ route('addToCart', $item->id) }}" class="btn btn-warning btn-block text-center" role="button">Add to cart</a>
                     </div>
                 @endforeach
             </div>

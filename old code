@@ -182,3 +182,89 @@ label {
         @else
             <p>No items found.</p>
         @endif
+///**********************************
+/// TRADE PAGE
+///**********************************
+// */
+//
+///* Pagination */
+//.pagination {
+//    text-align: center;
+//    margin: 20px 0;
+//    color: variables.$white;
+//
+//    a {
+//        display: inline-block;
+//        padding: 10px 15px;
+//        margin: 5px;
+//        background-color: variables.$white;
+//        border-radius: 5px;
+//        text-decoration: none;
+//        color: variables.$default-text;
+//    }
+//
+//    a.active {
+//        background-color: variables.$default-bg;
+//        color: white;
+//    }
+//
+//    a:hover {
+//        background-color: variables.$default-bg;
+//        color: white;
+//    }
+//
+//    svg {
+//        width: 20px;
+//        height: 20px;
+//        vertical-align: center;
+//    }
+//
+//    span.relative.inline-flex.items-center.px-2.py-2.text-sm.font-medium.text-gray-500.bg-white.border.border-gray-300.cursor-default.rounded-l-md.leading-5.dark\:bg-gray-800.dark\:border-gray-600 {
+//        display: none !important;
+//    }
+//
+//    a.relative.inline-flex.items-center.px-2.py-2.-ml-px.text-sm.font-medium.text-gray-500.bg-white.border.border-gray-300.rounded-r-md.leading-5.hover\:text-gray-400.focus\:z-10.focus\:outline-none.focus\:ring.ring-gray-300.focus\:border-blue-300.active\:bg-gray-100.active\:text-gray-500.transition.ease-in-out.duration-150.dark\:bg-gray-800.dark\:border-gray-600.dark\:active\:bg-gray-700.dark\:focus\:border-blue-800 {
+//        display: none !important;
+//    }
+//
+//    a.relative.inline-flex.items-center.px-2.py-2.text-sm.font-medium.text-gray-500.bg-white.border.border-gray-300.rounded-l-md.leading-5.hover\:text-gray-400.focus\:z-10.focus\:outline-none.focus\:ring.ring-gray-300.focus\:border-blue-300.active\:bg-gray-100.active\:text-gray-500.transition.ease-in-out.duration-150.dark\:bg-gray-800.dark\:border-gray-600.dark\:active\:bg-gray-700.dark\:focus\:border-blue-800 {
+//        display: none !important;
+//    }
+//}
+//
+//.trade {
+//    background-color: variables.$egg-white;
+//    padding: 10px;
+//    border-radius: 4px;
+//    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+//
+//    h3 {
+//        margin-top: 0;
+//    }
+//
+//    a {
+//        color: variables.$black;
+//        font-weight: bold;
+//        text-decoration: none;
+//        text-align: left;
+//    }
+//
+//    .options {
+//        display: flex;
+//        justify-content: space-between;
+//    }
+//}
+//
+//a#yes {
+//    color: variables.$green;
+//}
+//
+//a#no {
+//    color: variables.$red;
+//}
+//
+//@media (width >= 450px) {
+//    .register {
+//        width: 380px;
+//    }
+//}
