@@ -42,16 +42,16 @@
                 </div>
             @endauth
 
-                <a href="/cart" class="shopping-cart">
-                    <i class="fa-solid fa-cart-shopping"></i>
-                </a>
+            <a href="/wishlist" class="wishlist">
+                <i class="fa-solid fa-heart"></i>
+            </a>
 
-                <a href="/wishlist" class="wishlist">
-                    <i class="fa-solid fa-heart"></i>
-                </a>
-            </div>
+            <a href="/cart" class="shopping-cart">
+                <i class="fa-solid fa-cart-shopping"></i>
+            </a>
         </div>
     </div>
+</div>
 </div>
 </body>
 </html>

@@ -35,12 +35,11 @@ Route::get('account/overzicht/{id}', [UserController::class, 'show'])->name('pro
 
 //shop routes
 Route::get('/shop', [UserInventoryController::class, 'showItems'])->name('showItems');
-Route::post('/shop', [UserInventoryController::class, 'showItems'])->name('showItems');
 Route::get('/check-providers', [UserInventoryController::class, 'testCookie']);
 
 
 //shopping cart
-Route::get('/cart', Cart::class)->name('cart');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/items/items/{user}', [TradeController::class, 'getUserItems'])->name('getUserItems');

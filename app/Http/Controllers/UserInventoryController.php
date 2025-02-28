@@ -42,11 +42,13 @@ class UserInventoryController extends Controller
         $query = preg_replace('/[^\w\s\-.@]/', '', $query); // Strip invalid characters
 
         // Fetch matching items
-        $results = UserInventory::whereHas('user', function ($q) use ($query) {
-            $q->where('name', 'LIKE', "%{$query}%");
-        })
+        $results = UserInventory::where('item_name', 'LIKE', "%{$query}%")
+            ->orWhereHas('user', function ($q) use ($query) {
+                $q->where('name', 'LIKE', "%{$query}%");
+            })
             ->orWhere('game', 'LIKE', "%{$query}%")
             ->orWhere('rarity', 'LIKE', "%{$query}%")
+            ->limit(10) // Limit results for better performance
             ->get(['item_name']);
 
         return response()->json($results);
@@ -55,7 +57,7 @@ class UserInventoryController extends Controller
     public function showItems(){
         $all_items = UserInventory::inRandomOrder()->paginate(20);
 
-        return view('livewire.items', compact('all_items'));
+        return view('items.items', compact('all_items'));
     }
 
 

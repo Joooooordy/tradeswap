@@ -62,32 +62,40 @@ $(document).ready(function () {
 
     // Search bar
     const predictiveSearchUrl = "/search/predictive";
+    let searchTimeout; // Debounce timeout
 
     $('#search-input').on('keyup', function () {
-        let query = $(this).val();
+        clearTimeout(searchTimeout); // Clear previous timeout
+
+        let query = $(this).val().trim();
         if (query.length > 0) {
-            $.ajax({
-                url: predictiveSearchUrl,
-                method: 'GET',
-                data: {query: query},
-                success: function (data) {
-                    $('#suggestions').empty().show();
-                    if (data.length > 0) {
-                        data.forEach(item => {
-                            $('#suggestions').append(`<div>${item.item_name}</div>`);
-                        });
-                    } else {
-                        $('#suggestions').append('<div>No results</div>');
+            searchTimeout = setTimeout(() => {
+                $.ajax({
+                    url: predictiveSearchUrl,
+                    method: 'GET',
+                    data: { query: query },
+                    success: function (data) {
+                        $('#suggestions').empty().show();
+                        if (data.length > 0) {
+                            data.forEach(item => {
+                                $('#suggestions').append(`<div class="suggestion-item">${item.item_name}</div>`);
+                            });
+                        } else {
+                            $('#suggestions').append('<div class="no-results">No results found</div>');
+                        }
+                    },
+                    error: function () {
+                        $('#suggestions').empty().append('<div class="error">Error fetching results</div>');
                     }
-                }
-            });
+                });
+            }, 300); // Wait 300ms after typing stops
         } else {
             $('#suggestions').hide();
         }
     });
 
     // Select suggestion on click
-    $(document).on('click', '.suggestions-list div', function () {
+    $(document).on('click', '.suggestion-item', function () {
         $('#search-input').val($(this).text());
         $('#suggestions').hide();
     });

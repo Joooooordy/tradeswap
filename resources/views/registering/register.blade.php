@@ -6,7 +6,7 @@
 
 <div class="register">
     <a href="/" class="avatar">
-        <img src="/images/avatar.png" alt="avatar"/>
+        <img src="apple-touch-icon.png" alt="avatar"/>
     </a>
     <h2>Register</h2>
 
