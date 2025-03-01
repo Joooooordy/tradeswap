@@ -90,7 +90,6 @@ body {
     @include mixins.item();
     text-align: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: functions.item-transition(0.3s, ease);
     overflow: hidden;
     will-change: contents;
     cursor: pointer;
@@ -106,9 +105,25 @@ body {
     }
 
     &:hover {
-        transform: scale(1.05);
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         z-index: 8;
+    }
+
+    .add-to-cart-button {
+        padding-top: 12px;
+        transition: functions.item-transition(0.3s, ease);
+
+        .add-to-cart {
+            text-decoration: none;
+            background-color: variables.$cal-poly-green;
+            color: variables.$white;
+            padding: 8px;
+            border-radius: 5px;
+        }
+
+        &:hover {
+            transform: scale(1.05);
+        }
     }
 }
 
@@ -646,13 +661,14 @@ tfoot {
         text-transform: uppercase;
     }
 
-    .btn-warning {
-        background-color: #f39c12;
+    .continue-shopping {
+        background-color: variables.$moonstone;
         color: white;
         margin-right: 10px;
+        text-decoration: none;
 
         &:hover {
-            background-color: #e67e22;
+            background-color: variables.$dark_blue;
         }
     }
 
@@ -662,6 +678,37 @@ tfoot {
 
         &:hover {
             background-color: #27ae60;
+        }
+    }
+}
+
+.noitems {
+    text-align: center;
+    margin: 50px 0 50px 0;
+
+    h3 {
+        font-size: 24px;
+        color: variables.$white;
+        margin-bottom: 10px;
+    }
+
+    p {
+        font-size: 16px;
+        color: variables.$light_white;
+        margin-bottom: 20px;
+    }
+
+    .btn-primary {
+        padding: 10px 20px;
+        font-size: 18px;
+        border-radius: 5px;
+        text-decoration: none;
+        color: variables.$bittersweet;
+        transition: functions.text-transition(0.3s, ease);
+
+        &:hover {
+            transform: scale(1.05);
+            font-size: 20px;
         }
     }
 }

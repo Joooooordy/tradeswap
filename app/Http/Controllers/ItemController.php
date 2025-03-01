@@ -35,12 +35,11 @@ class ItemController extends Controller
     /**
      * Write code on Method
      *
-     * @return response()
+     * @return \Illuminate\Http\JsonResponse()
      */
     public function addToCart($id)
     {
         $product = UserInventory::findOrFail($id);
-
 
         try {
             $cart = session()->get('cart', []);
@@ -48,7 +47,7 @@ class ItemController extends Controller
             Log::error('Cart not found');
         }
 
-        if(isset($cart[$id])) {
+        if (isset($cart[$id])) {
             $cart[$id]['quantity']++;
         } else {
             $cart[$id] = [
@@ -61,8 +60,19 @@ class ItemController extends Controller
         }
 
         session()->put('cart', $cart);
-        return redirect()->back()->with('success', 'Product added to cart successfully!');
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Product added to cart successfully!',
+            'cart_count' => count($cart),
+            'cart_item' => [
+                'name' => $product->item_name,
+                'image' => $product->icon_url,
+                'user' => $product->user->name,
+            ]
+        ]);
     }
+
 
     /**
      * Write code on Method

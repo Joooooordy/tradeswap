@@ -108,42 +108,145 @@ $(document).ready(function () {
     });
 
     // Cart
-    $(".update-cart").change(function (e) {
+    $(".add-to-cart").click(function (e) {
         e.preventDefault();
 
+        let productId = $(this).data("id");
+
+        $.ajax({
+            url: "/cart/add-to-cart/" + productId,
+            type: "GET",
+            dataType: "json",
+            success: function (response) {
+                if (response.success) {
+                    Swal.fire({
+                        title: "Item added to cart",
+                        html: `
+                        <strong>${response.cart_item.name}</strong> <br>
+                        <small>Sold by: <b>${response.cart_item.user}</b></small>
+                    `,
+                        imageUrl: response.cart_item.image,
+                        imageWidth: 150,
+                        imageHeight: 150,
+                        imageAlt: "Product image",
+                        icon: "success",
+                        showConfirmButton: true,
+                        confirmButtonText: 'Go to Cart',
+                        showCancelButton: true,
+                        cancelButtonText: 'Continue Shopping',
+                        reverseButtons: true, // Optional to reverse the order of buttons
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Redirect to the cart page if user clicks 'Go to Cart'
+                            window.location.href = "/cart";
+                        }
+                    });
+
+                    $("#cart-count").text(response.cart_count);
+                }
+            },
+            error: function (xhr) {
+                console.error(xhr.responseText);
+            }
+        });
+    });
+
+
+    $(".update-cart").change(function (e) {
+        event.preventDefault(); // Prevent default action
+
         var ele = $(this);
+        var quantity = ele.val();
+        var productName = ele.parents("tr").find("h4.nomargin").text(); // Get product name
+        var productId = ele.parents("tr").attr("data-id");
 
         $.ajax({
             url: '/cart/update-cart',
             method: "patch",
             data: {
-                id: ele.parents("tr").attr("data-id"),
-                quantity: ele.parents("tr").find(".quantity").val()
+                id: productId,
+                quantity: quantity
             },
             success: function (response) {
-                window.location.reload();
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Cart updated!',
+                    text: `${productName} is updated to ${quantity}.`,
+                    showConfirmButton: false,
+                    timer: 1500 // Auto-close after 1.5 seconds
+                }).then(() => {
+                    // After SweetAlert closes, update the subtotal
+                    let price = parseFloat(ele.parents("tr").find("td[data-th='Price']").text().replace('$', ''));
+                    let newSubtotal = (price * quantity).toFixed(2);
+                    ele.parents("tr").find("td[data-th='Subtotal']").text(`$${newSubtotal}`);
+
+                    // Update total dynamically after SweetAlert closes
+                    updateCartTotal();
+                });
             }
         });
     });
 
+// Function to recalculate the cart total dynamically
+    function updateCartTotal() {
+        // Calculate the new total based on the remaining items in the cart
+        let total = 0;
+
+        $('#cart tbody tr').each(function () {
+            const price = parseFloat($(this).find('td[data-th="Price"]').text().replace('$', ''));
+            const quantity = parseInt($(this).find('input[type="number"]').val());
+            total += price * quantity;
+        });
+
+        // Update the displayed total
+        $('#cart-total').text('$' + total.toFixed(2)); // Update the total displayed in the cart
+    }
+
+
     $(".remove-from-cart").click(function (e) {
-        e.preventDefault();
+        e.preventDefault(); // Corrected event.preventDefault() syntax
 
-        var ele = $(this);
+        const ele = $(this);
 
-        if (confirm("Are you sure want to remove?")) {
-            $.ajax({
-                url: '/cart/remove-from-cart',
-                method: "DELETE",
-                data: {
-                    id: ele.parents("tr").attr("data-id")
-                },
-                success: function (response) {
-                    window.location.reload();
-                }
-            });
-        }
+        // Get the product name (you can adjust the selector depending on your HTML structure)
+        const productName = ele.parents("tr").find("td[data-th='Product']").find("h4").text().trim();
+
+        // Use SweetAlert instead of native confirm
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, remove it!',
+            cancelButtonText: 'Cancel',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '/cart/remove-from-cart',
+                    method: "DELETE",
+                    data: {
+                        id: ele.parents("tr").attr("data-id")
+                    },
+                    success: function (response) {
+                        // SweetAlert for successful removal
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Removed!',
+                            text: `${productName} has been removed from the cart.`,
+                            showConfirmButton: false,
+                            timer: 1500 // Auto-close after 1.5 seconds
+                        }).then(() => {
+                            // Reload the page or update the cart dynamically (optional)
+                            window.location.reload(); // Refresh the page
+                        });
+                    }
+                });
+            }
+        });
     });
+
+
 
     // //Trade page
     // $('#receiver_id').change(function () {
