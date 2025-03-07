@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Models\UserInventory;
 use Illuminate\Http\Response;
@@ -14,7 +18,7 @@ class ItemController extends Controller
     /**
      * Write code on Method
      *
-     * @return response()
+     * @return Application|Factory|\Illuminate\View\View|View()
      */
     public function index()
     {
@@ -25,17 +29,19 @@ class ItemController extends Controller
     /**
      * Write code on Method
      *
-     * @return response()
+     * @return Factory|View|Application|\Illuminate\View\View()
      */
     public function cart()
     {
-        return view('shop.cart');
+        $all_items = UserInventory::inRandomOrder()->paginate(4);
+
+        return view('shop.cart', compact('all_items'));
     }
 
     /**
      * Write code on Method
      *
-     * @return \Illuminate\Http\JsonResponse()
+     * @return JsonResponse()
      */
     public function addToCart($id)
     {

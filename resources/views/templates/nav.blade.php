@@ -13,7 +13,8 @@
             <form id="search-form" action="{{ route('search') }}" method="GET">
                 @csrf
                 <div class="search-container">
-                    <input type="text" id="search-input" name="query" placeholder="Search for items or users..." autocomplete="off">
+                    <input type="text" id="search-input" name="query" placeholder="Search for items or users..."
+                           autocomplete="off">
                     <button type="submit" class="search-button">
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </button>
@@ -49,7 +50,7 @@
 
             <a href="/cart" class="shopping-cart">
                 <i class="fa-solid fa-cart-shopping"></i>
-                <span id="cart-count">{{ session('cart') ? count(session('cart')) : 0 }}</span>
+                <span id="cart-count">{{ session('cart') ? count(session('cart')) : ''}}</span>
             </a>
         </div>
     </div>

@@ -15,7 +15,8 @@
                         <p>Price: € {{ $item->price }}</p>
                         <p>Sold by: {{ $item->user->name }}</p>
                         <div class="add-to-cart-button">
-                            <a href="{{ route('addToCart', $item->id) }}" class="add-to-cart" data-id="{{$item->id}}" role="button">Add to cart</a>
+                            <a href="{{ route('addToCart', $item->id) }}" class="add-to-cart" data-id="{{$item->id}}"
+                               role="button">Add to cart</a>
                         </div>
                     </div>
                 @endforeach
@@ -23,6 +24,10 @@
         @else
             <p>No items found.</p>
         @endif
+    </div>
+
+    <div class="pagination">
+        {{ $all_items->links() }}
     </div>
 </div>
 
