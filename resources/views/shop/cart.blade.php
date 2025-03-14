@@ -103,6 +103,29 @@
                 </div>
             </div>
         </div>
+
+        <!-- Bought Together Section -->
+        <div class="bought-together">
+            <h2>Often bought together</h2>
+            <div class="bought-together-items">
+                @foreach($all_items as $item)
+                    <div class="item">
+                        <div class="item-image">
+                            <img class="item-icon" src="{{$item->icon_url}}" alt="icon.png"/>
+                        </div>
+                        <h3>{{ $item->item_name }}</h3>
+                        <p>Game: {{ $item->game }}</p>
+                        <p>Rarity: {{ $item->rarity }}</p>
+                        <p>Price: € {{ $item->price }}</p>
+                        <p>Sold by: {{ $item->user->name }}</p>
+                        <div class="add-to-cart-button">
+                            <a href="{{ route('addToCart', $item->id) }}" class="add-to-cart" data-id="{{$item->id}}"
+                               role="button">Add to cart</a>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
     @else
         <div class="noitems">
             <h3>Your cart is empty</h3>
@@ -112,29 +135,6 @@
             </a>
         </div>
     @endif
-
-    <!-- Bought Together Section -->
-    <div class="bought-together">
-        <h2>Often bought together</h2>
-        <div class="bought-together-items">
-            @foreach($all_items as $item)
-                <div class="item">
-                    <div class="item-image">
-                        <img class="item-icon" src="{{$item->icon_url}}" alt="icon.png"/>
-                    </div>
-                    <h3>{{ $item->item_name }}</h3>
-                    <p>Game: {{ $item->game }}</p>
-                    <p>Rarity: {{ $item->rarity }}</p>
-                    <p>Price: € {{ $item->price }}</p>
-                    <p>Sold by: {{ $item->user->name }}</p>
-                    <div class="add-to-cart-button">
-                        <a href="{{ route('addToCart', $item->id) }}" class="add-to-cart" data-id="{{$item->id}}"
-                           role="button">Add to cart</a>
-                    </div>
-                </div>
-            @endforeach
-        </div>
-    </div>
 </div>
 
 

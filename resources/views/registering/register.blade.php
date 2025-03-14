@@ -26,22 +26,49 @@
         </div>
         <div class="textbox">
             <label>
-                <input type="password" name="password" placeholder="Password" required/>
+                <input type="password" id="password" name="password" placeholder="Password" required />
+                <i id="password-i" class="fa-solid fa-eye"></i>
             </label>
             <span class="material-symbols-outlined"> lock </span>
         </div>
         <div class="textbox">
             <label>
                 <input type="password" name="password_confirmation" placeholder="Confirm Password" required/>
+                <i id="passwordconf-i" class="fa-solid fa-eye"></i>
             </label>
             <span class="material-symbols-outlined"> lock </span>
         </div>
-        <button type="submit">Register</button>
+        <div class="content-pass">
+            <p>Password must contain:</p>
+            <ul class="requirement-list">
+                <li>
+                    <i class="fa-solid fa-circle"></i>
+                    <span>At least 8 characters length</span>
+                </li>
+                <li>
+                    <i class="fa-solid fa-circle"></i>
+                    <span>At least 1 number (0...9)</span>
+                </li>
+                <li>
+                    <i class="fa-solid fa-circle"></i>
+                    <span>At least 1 lowercase letter (a...z)</span>
+                </li>
+                <li>
+                    <i class="fa-solid fa-circle"></i>
+                    <span>At least 1 special symbol (!...$)</span>
+                </li>
+                <li>
+                    <i class="fa-solid fa-circle"></i>
+                    <span>At least 1 uppercase letter (A...Z)</span>
+                </li>
+            </ul>
+        </div>
+        <button class="register-submit" type="submit">Register</button>
         <a href="/login">Already have an account? Login here</a>
     </form>
 
-    <div class="alert-bottom" id="errorAlert">
-        <ul id="errorMessages" style="list-style: none; margin: 0; padding: 0;"></ul>
+    <div class="alert-bottom" id="errorAlert" style="display: none">
+        <ul id="errorMessages"></ul>
     </div>
 
 </div>

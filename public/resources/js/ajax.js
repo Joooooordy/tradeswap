@@ -5,59 +5,108 @@ $(document).ready(function () {
         }
     });
 
-    // Function to handle form submission for login/registering
+// jQuery AJAX form submission with validation
     function handleFormSubmission(form) {
-        event.preventDefault(); // Prevent default form submission
 
-        const formData = $(form).serialize(); // Serialize form data
-        const submitButton = $(form).find("button[type='submit']"); // Get submit button
-        const originalButtonText = submitButton.html(); // Store original button text
+        const $form = $(form);
+        const formData = $form.serialize();
+        const submitButton = $form.find("button[type='submit']");
+        const originalButtonText = submitButton.html();
+        const $registerBox = $('.register');
 
-        // Determine button text based on form ID or action
-        const actionText = $(form).attr('id') === "login-form" ? "Logging in" : "Registering";
+        const actionText = $form.attr('id') === "login-form" ? "Logging in" : "Registering";
 
-        // Add spinner after the text and disable button
+        // Proceed with AJAX submission
         submitButton.html(actionText + ' <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>').prop("disabled", true);
 
         $.ajax({
-            url: $(form).attr('action'),
-            method: $(form).attr('method'),
+            url: $form.attr('action'),
+            method: $form.attr('method'),
             data: formData,
             success: function (response) {
-                window.location.href = response.redirect;
+                Swal.fire({
+                    title: 'Success!',
+                    text: 'You have been registered successfully!',
+                    icon: 'success',
+                    showConfirmButton: false,  // Hide the OK button
+                    timer: 2000               // Set the time (in milliseconds) before auto-closing the alert
+                }).then(function() {
+                    // Redirect after the SweetAlert2 modal closes
+                    window.location.href = response.redirect;
+                });
             },
             error: function (xhr) {
-                if (xhr.responseJSON && xhr.responseJSON.errors) {
+                if (xhr.status === 422) {
                     const errors = xhr.responseJSON.errors;
-                    let errorList = '';
 
-                    $.each(errors, function (key, value) {
-                        errorList += '<li>' + value + '</li>';
+                    $.each(errors, function (field, messages) {
+                        const fieldElement = $form.find(`[name="${field}"]`);
+                        const textboxElement = fieldElement.closest('.textbox');
+
+                        // Remove previous error messages for the current field
+                        textboxElement.siblings(".error-message-" + field).remove();
+
+                        // Add new error messages if any
+                        messages.forEach(function (message) {
+                            textboxElement.after(`<div class="error-message error-message-${field}">${message}</div>`);
+                        });
+
+                        // Add the expanded-error class to increase box height initially
+                        $registerBox.addClass('expanded-error');
+
+                        // Add an event listener to remove error messages and adjust height when typing starts
+                        fieldElement.on('input', function () {
+                            // Remove the error message for this field
+                            $(this).closest('.textbox').siblings(".error-message-" + field).remove();
+
+                            // After removing the error, check how many error messages remain
+                            updateRegisterBoxHeight(); // Function to update box height
+                        });
+
+                        // Add a listener for when an error message is added back
+                        fieldElement.on('focus', function () {
+                            // When the field gets focus again, check how many error messages are present
+                            updateRegisterBoxHeight(); // Function to update box height
+                        });
                     });
 
-                    $('#errorMessages').html(errorList);
-                    $('#errorAlert').fadeIn();
-
-                    setTimeout(function () {
-                        $('#errorAlert').fadeOut();
-                    }, 5000);
+                    // Ensure that after submitting, the box height is correctly adjusted
+                    updateRegisterBoxHeight();
                 } else {
+                    // Handle other errors (e.g., network errors)
                     $('#errorMessages').html('<li>An unexpected error occurred.</li>');
                     $('#errorAlert').fadeIn();
                 }
             },
             complete: function () {
-                // Restore original button text and enable button
                 submitButton.html(originalButtonText).prop("disabled", false);
             }
         });
     }
 
-    // Bind form submission to the handler
+// Bind form submission to the handler
     $('#register-form, #login-form').on('submit', function (event) {
+        event.preventDefault();
         handleFormSubmission(this);
     });
 
+    function updateRegisterBoxHeight() {
+        const remainingErrors = $('.error-message').length;
+        const $registerBox = $('.register');
+        const heightPerError = 30;
+        const baseHeight = 700;
+
+        // Update height based on remaining errors
+        const newHeight = baseHeight + remainingErrors * heightPerError;
+        $registerBox.css('height', newHeight + 'px');
+
+        // If no errors are left, remove the expanded-error class
+        if (remainingErrors === 0) {
+            $registerBox.removeClass('expanded-error');
+        } else {
+            $registerBox.addClass('expanded-error');
+        }
+    }
 
 
     // Search bar
@@ -73,7 +122,7 @@ $(document).ready(function () {
                 $.ajax({
                     url: predictiveSearchUrl,
                     method: 'GET',
-                    data: { query: query },
+                    data: {query: query},
                     success: function (data) {
                         $('#suggestions').empty().show();
                         if (data.length > 0) {
@@ -247,7 +296,6 @@ $(document).ready(function () {
     });
 
 
-
     // //Trade page
     // $('#receiver_id').change(function () {
     //     let userId = $(this).val(); // Get the selected user ID
@@ -343,14 +391,14 @@ $(document).ready(function () {
     // });
 
     //logout functionality
-    $('#logout-link').on('click', function(event) {
+    $('#logout-link').on('click', function (event) {
         event.preventDefault();  // Prevent default link behavior
 
         // Perform AJAX POST request to logout immediately
         $.ajax({
             url: $(this).data('logout-url'),
             method: 'POST',
-            success: function(response) {
+            success: function (response) {
                 // Show success message and redirect
                 Swal.fire({
                     title: 'Logged out!',
@@ -362,7 +410,7 @@ $(document).ready(function () {
                     window.location.href = $('#logout-link').data('home-url');
                 });
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 // Show error message if logout fails
                 Swal.fire(
                     'Error!',

@@ -12,23 +12,29 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Validation\Rules\Password;
 
 class RegisterController extends Controller
 {
     /**
      * Handle user registration and authentication.
+     *
+     * @param Request $request
+     * @return JsonResponse
      * @throws ValidationException
      */
     public function authenticate(Request $request): JsonResponse
     {
         // Define validation rules
-        $validator = Validator::make($request->all(), [
+        $rules = [
             'username' => [
                 'required',
                 'string',
+                'max:255',
+                'unique:users,name',
                 'not_regex:/<[^>]*>?/', // Prevent HTML tags
-                'max:255'
             ],
+
             'email' => [
                 'required',
                 'email',
@@ -43,15 +49,37 @@ class RegisterController extends Controller
                     }
                 },
             ],
+
             'password' => [
                 'required',
-                'string',
-                'min:8',
-                'confirmed',
-            ]
-        ]);
+                'confirmed', // matches password_confirmation
+                Password::min(8)
+                    ->mixedCase()    // upper & lowercase
+                    ->letters()      // at least one letter
+                    ->numbers()      // at least one number
+                    ->symbols(),     // at least one special character
+            ],
+        ];
 
-        // Check for validation failures
+        $messages = [
+            'username.required' => 'Username is required.',
+            'username.not_regex' => 'Username cannot contain HTML or special tags.',
+            'username.taken' => 'Username is already taken.',
+            'email.required' => 'Email is required.',
+            'email.email' => 'Please enter a valid email address.',
+            'email.unique' => 'This email is already registered.',
+            'password.required' => 'Password is required.',
+            'password.confirmed' => 'Password confirmation does not match.',
+            'password.min' => 'Password must be at least 8 characters long.',
+            'password.mixed_case' => 'Password must contain both uppercase and lowercase letters.',
+            'password.letters' => 'Password must contain at least one letter.',
+            'password.numbers' => 'Password must contain at least one number.',
+            'password.symbols' => 'Password must contain at least one special character.',
+        ];
+
+        // Perform validation
+        $validator = Validator::make($request->all(), $rules, $messages);
+
         if ($validator->fails()) {
             return response()->json([
                 'errors' => $validator->errors()
@@ -61,12 +89,14 @@ class RegisterController extends Controller
         // Proceed with handling validated data
         $credentials = $validator->validated();
 
-        // Sanitize input
-        $credentials['username'] = strip_tags($request->input('username'));
-        $credentials['email'] = strip_tags($request->input('email'));
-        $credentials['password'] = Hash::make($credentials['password']); // Hash the password
+        // Sanitize username and email input
+        $credentials['username'] = strip_tags($credentials['username']);
+        $credentials['email'] = strip_tags($credentials['email']);
 
-        // Create the user and save it in the database
+        // Hash the password
+        $credentials['password'] = Hash::make($credentials['password']);
+
+        // Create the user and save to database
         $user = User::create([
             'name' => $credentials['username'],
             'email' => $credentials['email'],
@@ -76,11 +106,11 @@ class RegisterController extends Controller
             'last_login_at' => Carbon::now(),
         ]);
 
-        // Log in the user and regenerate session
+        // Log the user in and regenerate session
         Auth::login($user);
         $request->session()->regenerate();
 
-        // Return success response (e.g., redirecting to a welcome page or home)
+        // Return success response (e.g., redirect to dashboard)
         return response()->json([
             'message' => 'Registration successful!',
             'redirect' => '/'

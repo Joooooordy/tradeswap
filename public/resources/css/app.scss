@@ -234,6 +234,17 @@ img.item-icon {
     width: auto;
     min-width: 300px;
     font-size: 16px;
+
+    #errorMessages {
+        list-style-type: none;
+        text-align: center;
+        padding-left: 0;
+    }
+}
+
+.error-message {
+    position: relative;
+    color: variables.$red;
 }
 
 #account.active {
@@ -395,6 +406,17 @@ img.item-icon {
     @include mixins.background-transparent();
     text-align: center;
     color: variables.$white;
+    height: 700px; // Default collapsed height (adjust this as needed)
+    max-height: 925px;
+    transition: height 0.4s ease;
+
+    &.expanded {
+        height: 925px; // Expanded height when .content-pass is shown
+    }
+
+    &.expanded-error {
+        height: 820px;
+    }
 
     > h2 {
         @include mixins.font-family();
@@ -417,10 +439,32 @@ img.item-icon {
     place-items: center;
     width: 100%;
     margin: 0;
+    transition: height 0.4s ease;
+
+    .textbox {
+
+        display: flex;
+        align-items: center; /* Align items horizontally */
+        position: relative;
+
+        .material-symbols-outlined {
+            margin-right: 8px; /* Adjust space between input and icon */
+        }
+
+        i {
+            right: 18px;
+            top: 50%;
+            font-size: 1.2rem;
+            color: variables.$white;
+            cursor: pointer;
+            position: absolute;
+            transform: translateY(-50%);
+        }
+    }
 
     input {
-        width: 100%;
-        height: 60px;
+        width: 141%;
+        height: 45px;
         outline: none;
         font-family: variables.$inherit;
         border-radius: 8px;
@@ -439,6 +483,52 @@ img.item-icon {
         }
     }
 
+    .content-pass {
+        display: none;
+        width: 100%;
+        transition: opacity 0.3s ease;
+
+        p {
+            color: variables.$white;
+            text-align: left;
+        }
+
+        .requirement-list {
+            margin-top: 20px;
+            padding: 0;
+
+            li {
+                list-style: none;
+                display: flex;
+                align-items: center;
+                margin-bottom: 15px;
+
+                i {
+                    width: 10px;
+                    color: variables.$nardogrey;
+                    font-size: 0.6rem;
+                }
+
+                span {
+                    margin-left: 12px;
+                    color: variables.$white;
+                }
+
+                &.valid {
+                    i {
+                        color: variables.$cal-poly-green;
+                        font-size: 1.2rem;
+                    }
+
+                    span {
+                        color: variables.$jet;
+                    }
+
+                }
+            }
+        }
+    }
+
     button {
         width: 100%;
         height: 60px;
@@ -448,7 +538,7 @@ img.item-icon {
         font-size: 16px;
         border-radius: 8px;
         cursor: pointer;
-        background: #157ae1;
+        background: variables.$blue;
         color: variables.$egg_white;
         border: 0;
         font-weight: 600;
@@ -755,43 +845,6 @@ section.profile-skins {
     background-color: #28a745;
     color: white;
 }
-
-// Total and Checkout Section
-//tfoot {
-//    font-weight: bold;
-//
-//    h3 {
-//        margin: 0;
-//        color: variables.$white;
-//    }
-//
-//    .btn {
-//        border-radius: 4px;
-//        padding: 10px 15px;
-//        font-size: 16px;
-//        text-transform: uppercase;
-//    }
-//
-//    .continue-shopping {
-//        background-color: variables.$moonstone;
-//        color: white;
-//        margin-right: 10px;
-//        text-decoration: none;
-//
-//        &:hover {
-//            background-color: variables.$dark_blue;
-//        }
-//    }
-//
-//    .btn-success {
-//        background-color: #2ecc71;
-//        color: white;
-//
-//        &:hover {
-//            background-color: #27ae60;
-//        }
-//    }
-//}
 
 .noitems {
     text-align: center;

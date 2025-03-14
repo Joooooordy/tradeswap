@@ -50,7 +50,7 @@
 
             <a href="/cart" class="shopping-cart">
                 <i class="fa-solid fa-cart-shopping"></i>
-                <span id="cart-count">{{ session('cart') ? count(session('cart')) : ''}}</span>
+                <span id="cart-count">{{ session('cart') ? count(session('cart')) : 0 }}</span>
             </a>
         </div>
     </div>
