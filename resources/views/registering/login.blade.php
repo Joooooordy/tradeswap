@@ -19,7 +19,8 @@
         </div>
         <div class="textbox">
             <label>
-                <input type="password" name="password" placeholder="Password" required/>
+                <input type="password" id="password-login" name="password" placeholder="Password" required />
+                <i id="password-i-login" class="fa-solid fa-eye"></i>
             </label>
             <span class="material-symbols-outlined" id="login"> lock </span>
         </div>

@@ -162,52 +162,72 @@ $(document).ready(function () {
 
         let productId = $(this).data("id");
 
-        $.ajax({
-            url: "/cart/add-to-cart/" + productId,
-            type: "GET",
-            dataType: "json",
-            success: function (response) {
-                if (response.success) {
-                    Swal.fire({
-                        title: "Item added to cart",
-                        html: `
-                        <strong>${response.cart_item.name}</strong> <br>
-                        <small>Sold by: <b>${response.cart_item.user}</b></small>
-                    `,
-                        imageUrl: response.cart_item.image,
-                        imageWidth: 150,
-                        imageHeight: 150,
-                        imageAlt: "Product image",
-                        icon: "success",
-                        showConfirmButton: true,
-                        confirmButtonText: 'Go to Cart',
-                        showCancelButton: true,
-                        cancelButtonText: 'Continue Shopping',
-                        reverseButtons: true, // Optional to reverse the order of buttons
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            // Redirect to the cart page if user clicks 'Go to Cart'
-                            window.location.href = "/cart";
-                        }
-                    });
-
-                    $("#cart-count").text(response.cart_count);
+        // Check if we're on the cart page
+        if (window.location.pathname === '/cart') {
+            // If on the cart page, do the AJAX call but skip the SweetAlert
+            $.ajax({
+                url: "/cart/add-to-cart/" + productId,
+                type: "GET",
+                dataType: "json",
+                success: function (response) {
+                    if (response.success) {
+                        $("#cart-count").text(response.cart_count);
+                        window.location.reload()
+                    }
+                },
+                error: function (xhr) {
+                    console.error(xhr.responseText);
                 }
-            },
-            error: function (xhr) {
-                console.error(xhr.responseText);
-            }
-        });
+            });
+        } else {
+            // If not on the cart page, show SweetAlert
+            $.ajax({
+                url: "/cart/add-to-cart/" + productId,
+                type: "GET",
+                dataType: "json",
+                success: function (response) {
+                    if (response.success) {
+                        Swal.fire({
+                            title: "Item added to cart",
+                            html: `
+                            <strong>${response.cart_item.name}</strong> <br>
+                            <small>Sold by: <b>${response.cart_item.user}</b></small>
+                        `,
+                            imageUrl: response.cart_item.image,
+                            imageWidth: 150,
+                            imageHeight: 150,
+                            imageAlt: "Product image",
+                            icon: "success",
+                            showConfirmButton: true,
+                            confirmButtonText: 'Go to Cart',
+                            showCancelButton: true,
+                            cancelButtonText: 'Continue Shopping',
+                            reverseButtons: true, // Optional to reverse the order of buttons
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                // Redirect to the cart page if user clicks 'Go to Cart'
+                                window.location.href = "/cart";
+                            }
+                        });
+
+                        $("#cart-count").text(response.cart_count);
+                    }
+                },
+                error: function (xhr) {
+                    console.error(xhr.responseText);
+                }
+            });
+        }
     });
 
 
     $(".update-cart").change(function (e) {
-        event.preventDefault(); // Prevent default action
+        e.preventDefault(); // Prevent default action
 
-        var ele = $(this);
-        var quantity = ele.val();
-        var productName = ele.parents("tr").find("h4.nomargin").text(); // Get product name
-        var productId = ele.parents("tr").attr("data-id");
+        const ele = $(this);
+        const quantity = ele.val(); // Get the new quantity
+        const productName = ele.parents("tr").find("h4.nomargin").text(); // Get product name
+        const productId = ele.parents("tr").attr("data-id");
 
         $.ajax({
             url: '/cart/update-cart',
@@ -225,9 +245,13 @@ $(document).ready(function () {
                     timer: 1500 // Auto-close after 1.5 seconds
                 }).then(() => {
                     // After SweetAlert closes, update the subtotal
-                    let price = parseFloat(ele.parents("tr").find("td[data-th='Price']").text().replace('$', ''));
+                    let price = parseFloat(ele.parents("tr").find("td[data-th='Price']").text().replace('€ ', ''));
                     let newSubtotal = (price * quantity).toFixed(2);
-                    ele.parents("tr").find("td[data-th='Subtotal']").text(`$${newSubtotal}`);
+                    ele.parents("tr").find("td[data-th='Subtotal']").text(`€ ${newSubtotal}`);
+
+                    // Update the quantity in the cart summary
+                    let quantityText = ele.val();
+                    ele.parents("tr").find("td[data-th='Quantity'] small").text(`(${quantityText})`);
 
                     // Update total dynamically after SweetAlert closes
                     updateCartTotal();
@@ -238,17 +262,30 @@ $(document).ready(function () {
 
 // Function to recalculate the cart total dynamically
     function updateCartTotal() {
-        // Calculate the new total based on the remaining items in the cart
         let total = 0;
+        let totalItems = 0;
 
         $('#cart tbody tr').each(function () {
-            const price = parseFloat($(this).find('td[data-th="Price"]').text().replace('$', ''));
-            const quantity = parseInt($(this).find('input[type="number"]').val());
-            total += price * quantity;
+            // Get price from the table, removing any non-numeric characters like '€' or spaces
+            const priceText = $(this).find('td[data-th="Price"]').text().replace('€', '').trim();
+            const price = parseFloat(priceText);
+
+            // Get quantity from the select dropdown
+            const quantity = parseInt($(this).find('select.update-cart').val());
+
+            // Check if price and quantity are valid numbers
+            if (!isNaN(price) && !isNaN(quantity)) {
+                total += price * quantity;  // Add to the total price
+                totalItems += quantity;     // Add to the total number of items
+            } else {
+                console.error('Invalid price or quantity', price, quantity);
+            }
         });
 
         // Update the displayed total
-        $('#cart-total').text('$' + total.toFixed(2)); // Update the total displayed in the cart
+        $('#cart-total').text('€ ' + total.toFixed(2));           // Update the total cart price
+        $('#total-items').html(`Items (<small>${totalItems}</small>)`); // Update the total item count
+        $('#cart-total-items').text('€ ' + total.toFixed(2));      // Update the total in the summary
     }
 
 

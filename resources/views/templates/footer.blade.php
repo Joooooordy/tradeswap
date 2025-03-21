@@ -54,10 +54,13 @@
             <p>© Tradeswap.com LLC 2025 - 2025, All Rights Reserved.</p>
             <a href="mailto:Support@tradeswap.com">Support@tradeswap.com</a> | 16192 Coastal Hwy, Lewes, DE 19958, United States
             <div class="payment-icons">
+                <i class="fa-brands fa-paypal"></i>
+                <i class="fa-brands fa-ideal"></i>
                 <i class="fa-brands fa-cc-visa"></i>
                 <i class="fa-brands fa-cc-mastercard"></i>
-                <i class="fa-brands fa-bitcoin"></i>
-                <i class="fa-brands fa-ethereum"></i>
+                <i class="fa-brands fa-cc-amex"></i>
+                <i class="fa-brands fa-apple-pay"></i>
+                <i class="fa-brands fa-google-pay"></i>
             </div>
         </div>
     </div>

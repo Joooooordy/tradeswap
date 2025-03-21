@@ -98,8 +98,12 @@ $(document).ready(function () {
     // Select elements
     const passwordInput = document.querySelector("#password");
     const confirmPasswordInput = document.querySelector("[name='password_confirmation']");
+    const loginPasswordInput = document.querySelector("#password-login");
+
     const eyeIcon = document.querySelector("#password-i");
     const eyeIcon2 = document.querySelector("#passwordconf-i");
+    const eyeIcon3 = document.querySelector("#password-i-login");
+
     const requirementList = document.querySelectorAll(".requirement-list li");
 
 // Password requirements
@@ -111,40 +115,53 @@ $(document).ready(function () {
         {regex: /[A-Z]/, index: 4},         // At least one uppercase letter
     ];
 
-// Live password validation
-    passwordInput.addEventListener("keyup", (e) => {
-        requirements.forEach(item => {
-            const isValid = item.regex.test(e.target.value);
-            const requirementItem = requirementList[item.index];
+// Live password validation (for registration password input)
+    if (passwordInput) {
+        passwordInput.addEventListener("keyup", (e) => {
+            requirements.forEach(item => {
+                const isValid = item.regex.test(e.target.value);
+                const requirementItem = requirementList[item.index];
 
-            if (isValid) {
-                requirementItem.classList.add("valid");
-                requirementItem.firstElementChild.className = "fa-solid fa-check";
-            } else {
-                requirementItem.classList.remove("valid");
-                requirementItem.firstElementChild.className = "fa-solid fa-circle";
-            }
+                if (isValid) {
+                    requirementItem.classList.add("valid");
+                    requirementItem.firstElementChild.className = "fa-solid fa-check";
+                } else {
+                    requirementItem.classList.remove("valid");
+                    requirementItem.firstElementChild.className = "fa-solid fa-circle";
+                }
+            });
         });
-    });
+    }
 
-// Toggle function for both fields and icons
-    const togglePasswordVisibility = () => {
-        // Check the current state of the first password field
+// Toggle password visibility for registration form (toggles both fields)
+    const toggleRegistrationPasswords = () => {
         const isPasswordHidden = passwordInput.type === "password";
 
-        // Toggle both input types
         passwordInput.type = isPasswordHidden ? "text" : "password";
         confirmPasswordInput.type = isPasswordHidden ? "text" : "password";
 
-        // Toggle both icons
         const iconClass = `fa-solid fa-eye${isPasswordHidden ? "-slash" : ""}`;
         eyeIcon.className = iconClass;
         eyeIcon2.className = iconClass;
     };
 
-// Add event listeners to both icons
-    eyeIcon.addEventListener("click", togglePasswordVisibility);
-    eyeIcon2.addEventListener("click", togglePasswordVisibility);
+// Toggle password visibility for login form (toggles only the login field)
+    const toggleLoginPassword = () => {
+        const isPasswordHidden = loginPasswordInput.type === "password";
 
+        loginPasswordInput.type = isPasswordHidden ? "text" : "password";
+
+        eyeIcon3.className = `fa-solid fa-eye${isPasswordHidden ? "-slash" : ""}`;
+    };
+
+// Add event listeners
+    if (eyeIcon && eyeIcon2) {
+        eyeIcon.addEventListener("click", toggleRegistrationPasswords);
+        eyeIcon2.addEventListener("click", toggleRegistrationPasswords);
+    }
+
+    if (eyeIcon3) {
+        eyeIcon3.addEventListener("click", toggleLoginPassword);
+    }
 });
 

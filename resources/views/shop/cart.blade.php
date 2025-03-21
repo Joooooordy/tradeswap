@@ -42,7 +42,7 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td data-th="Price">${{ $details['price'] }}</td>
+                                <td data-th="Price">€ {{ $details['price'] }}</td>
                                 <td data-th="Quantity">
                                     @csrf
                                     <select name="quantity" class="form-control quantity update-cart">
@@ -54,7 +54,7 @@
                                     </select>
                                 </td>
                                 <td data-th="Subtotal" class="text-center">
-                                    ${{ $details['price'] * $details['quantity'] }}</td>
+                                    € {{ $details['price'] * $details['quantity'] }}</td>
                             </tr>
 
                             @if($index < $count)
@@ -72,26 +72,26 @@
                 <!-- Total Section -->
                 <div class="total">
                     <div class="total-summary">
-                        <h2>Overzicht</h2>
+                        <h2>Overview</h2>
                         <div class="total-item">
-                            <span class="total-label">Items (<small>{{ $details['quantity'] }}</small>)</span>
-                            <span class="total-value">${{ $total }}</span>
+                            <span class="total-label" id="total-items">Items (<small>{{ Session::get($details['quantity']) }}</small>)</span>
+                            <span class="total-value" id="cart-total-items">€ {{ $total }}</span>
                         </div>
                         <div class="total-item">
-                            <span class="total-label">Verzendkosten</span>
+                            <span class="total-label">Shipping</span>
                             <span class="total-value">€ 0,00</span>
                         </div>
                         <div class="total-item">
-                            <span class="total-label">Cadeaukaartcode invoeren</span>
+                            <span class="total-label">Discount Code</span>
                             <span class="total-value">-</span>
                         </div>
                         <div class="total-item total-bold">
-                            <span class="total-label">Nog te betalen:</span>
-                            <span class="total-value">${{ $total }}</span>
+                            <span class="total-label">Total:</span>
+                            <span class="total-value" id="cart-total">€ {{ $total }}</span>
                         </div>
                         <div class="total-item">
-                            <span class="total-label">Select Cadeau Sparen</span>
-                            <span class="total-value">+5 punten</span>
+                            <span class="total-label">Welcome Bonus</span>
+                            <span class="total-value">+5 points</span>
                         </div>
                     </div>
                     <div class="total-actions">
@@ -100,6 +100,33 @@
                         </a>
                         <button class="btn btn-success">Checkout</button>
                     </div>
+
+                    <i class="payment-icons-cart">
+                        <svg class="icon">
+                            <use xlink:href="svg/sprite.svg#paypal-svgrepo-com"></use>
+                        </svg>
+                        <svg class="icon">
+                            <use xlink:href="svg/sprite.svg#ideal-svgrepo-com"></use>
+                        </svg>
+                        <svg class="icon">
+                            <use xlink:href="svg/sprite.svg#visa-classic-svgrepo-com"></use>
+                        </svg>
+                        <svg class="icon">
+                            <use xlink:href="svg/sprite.svg#mastercard-full-svgrepo-com"></use>
+                        </svg>
+                        <svg class="icon">
+                            <use xlink:href="svg/sprite.svg#amex-svgrepo-com"></use>
+                        </svg>
+                        <svg class="icon">
+                            <use xlink:href="svg/sprite.svg#apple-pay-svgrepo-com"></use>
+                        </svg>
+                        <svg class="icon">
+                            <use xlink:href="svg/sprite.svg#google-pay-svgrepo-com"></use>
+                        </svg>
+                        <svg class="icon">
+                            <use xlink:href="svg/sprite.svg#klarna-svgrepo-com"></use>
+                        </svg>
+                    </i>
                 </div>
             </div>
         </div>

@@ -82,7 +82,7 @@ body {
 
 .items-grid, .bought-together-items {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     @include mixins.box-style-items();
 
 
@@ -315,17 +315,38 @@ img.item-icon {
     width: 100%;
     margin: 0;
 
+    .textbox {
+
+        display: flex;
+        align-items: center; /* Align items horizontally */
+        position: relative;
+
+        .material-symbols-outlined {
+            margin-right: 8px; /* Adjust space between input and icon */
+        }
+
+        i {
+            right: 18px;
+            top: 50%;
+            font-size: 1.2rem;
+            color: variables.$white;
+            cursor: pointer;
+            position: absolute;
+            transform: translateY(-50%);
+        }
+    }
+
     input {
-        width: 100%;
-        height: 60px;
+        width: 141%;
+        height: 45px;
         outline: none;
-        @include mixins.font-family();;
+        @include mixins.font-family();
         border-radius: 8px;
         background: transparent;
         border: 2px solid variables.$nardogrey;
         font-size: 18px;
         padding: 0 20px 0 50px;
-        color: variables.$white;
+        color: variables.$inherit;
 
         &::placeholder {
             color: variables.$white;
@@ -466,7 +487,7 @@ img.item-icon {
         width: 141%;
         height: 45px;
         outline: none;
-        font-family: variables.$inherit;
+        @include mixins.font-family();
         border-radius: 8px;
         background: transparent;
         border: 2px solid variables.$nardogrey;
@@ -688,6 +709,23 @@ section.profile-skins {
     width: 100%;
 }
 
+.bought-together {
+    h2 {
+        color: variables.$white;
+    }
+}
+
+.payment-icons-cart {
+    display: flex;
+    padding: 30px 0 0 0;
+
+    .icon {
+        width: 50px;
+        height: 50px;
+        margin: .5em;
+    }
+}
+
 .cart-and-total {
     display: flex;
     justify-content: space-between;
@@ -801,49 +839,84 @@ section.profile-skins {
 .total {
     flex: 1;
     padding: 20px;
+    margin-bottom: 110px;
     border: 1px solid #ddd;
     border-radius: 8px;
-    background-color: #f9f9f9;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
+    background-color: variables.$white;
+    box-shadow: 0 0 5px (variables.$white);
 
-.total-summary {
-    display: flex;
-    flex-direction: column;
-}
+    .total-summary {
+        display: flex;
+        flex-direction: column;
+    }
 
-.total-item {
-    display: flex;
-    justify-content: space-between;
-    padding: 8px 0;
-    border-bottom: 1px solid #ddd;
-}
+    .total-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 0;
+        border-bottom: 1px solid #ddd;
+    }
 
-.total-item.total-bold {
-    font-weight: bold;
-    font-size: 18px;
-}
+    .total-item.total-bold {
+        font-weight: bold;
+        font-size: 18px;
+    }
 
-.total-label {
-    font-size: 16px;
-}
+    .total-label {
+        font-size: 16px;
+    }
 
-.total-value {
-    font-size: 16px;
-    font-weight: bold;
-}
+    .total-value {
+        font-size: 16px;
+        font-weight: bold;
+    }
 
-.total-actions .btn {
-    margin-top: 10px;
-}
+    .total-actions {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px; // Space between the buttons
+        margin-top: 20px;
 
-.continue-shopping {
-    margin-right: 10px;
-}
+        .btn-success {
+            width: 310px;
+            background-color: #28a745;
+            font-family: inherit;
+            color: white;
+        }
 
-.btn-success {
-    background-color: #28a745;
-    color: white;
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: 500;
+            text-decoration: none;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: variables.$white;
+
+            i {
+                margin-right: 8px;
+            }
+
+            &.continue-shopping {
+                background-color: variables.$blue; // Primary blue background
+                &:hover {
+                    background-color: variables.$moonstone; // Darker blue on hover
+                }
+            }
+
+            &.btn-success {
+                background-color: variables.$green; // Green background for checkout button
+                &:hover {
+                    background-color: variables.$cal-poly-green; // Darker green on hover
+                }
+            }
+        }
+    }
 }
 
 .noitems {
