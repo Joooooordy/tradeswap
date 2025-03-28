@@ -14,9 +14,17 @@
                         <p>Rarity: {{ $item->rarity }}</p>
                         <p>Price: € {{ $item->price }}</p>
                         <p>Sold by: {{ $item->user->name }}</p>
-                        <div class="add-to-cart-button">
-                            <a href="{{ route('addToCart', $item->id) }}" class="add-to-cart" data-id="{{$item->id}}"
-                               role="button">Add to cart</a>
+                        <div class="shop-buttons">
+                            <div class="add-to-cart-button">
+                                <a href="{{ route('addToCart', $item->id) }}" class="add-to-cart"
+                                   data-id="{{$item->id}}"
+                                   role="button">Add to cart</a>
+                            </div>
+                            <div class="add-to-list-button">
+                                <a href="{{ route('addToList', $item->id) }}" class="add-to-list"
+                                   data-id="{{$item->id}}"
+                                   role="button">Add to wishlist</a>
+                            </div>
                         </div>
                     </div>
                 @endforeach

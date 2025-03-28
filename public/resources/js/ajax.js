@@ -30,7 +30,7 @@ $(document).ready(function () {
                     icon: 'success',
                     showConfirmButton: false,  // Hide the OK button
                     timer: 2000               // Set the time (in milliseconds) before auto-closing the alert
-                }).then(function() {
+                }).then(function () {
                     // Redirect after the SweetAlert2 modal closes
                     window.location.href = response.redirect;
                 });
@@ -218,6 +218,105 @@ $(document).ready(function () {
                 }
             });
         }
+    });
+
+    $(".add-to-list").click(function (e) {
+        e.preventDefault();
+
+        let productId = $(this).data("id");
+
+        $.ajax({
+            url: "/lists/add-to-list/" + productId,
+            type: "GET",
+            dataType: "json",
+            success: function (response) {
+                if (response.success) {
+                    Swal.fire({
+                        title: "Item added to wishlist",
+                        html: `
+                        <strong>${response.list_item.name}</strong> <br>
+                        <small>Sold by: <b>${response.list_item.user}</b></small>
+                    `,
+                        imageUrl: response.list_item.image,
+                        imageWidth: 150,
+                        imageHeight: 150,
+                        imageAlt: "Product image",
+                        icon: "success",
+                        showConfirmButton: true,
+                        confirmButtonText: "Go to wishlist",
+                        showCancelButton: true,
+                        cancelButtonText: "Continue Shopping",
+                        reverseButtons: true,
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = "/overview-lists"; // Redirect to wishlist instead of cart
+                        }
+                    });
+
+                    $("#wishlist-count").text(response.list_count); // Update wishlist count if applicable
+                }
+            },
+            error: function (xhr) {
+                if (xhr.status === 401) {
+                    Swal.fire({
+                        title: "Unauthorized!",
+                        text: "You must be logged in to add items to your wishlist.",
+                        icon: "warning",
+                        showConfirmButton: true,
+                        confirmButtonText: "Login",
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = "/login";
+                        }
+                    });
+                } else {
+                    console.error(xhr.responseText);
+                }
+            }
+        });
+    });
+
+    $(".remove-from-list").click(function (e) {
+        e.preventDefault(); // Corrected event.preventDefault() syntax
+
+        const ele = $(this);
+
+        // Get the product name (you can adjust the selector depending on your HTML structure)
+        const productName = ele.parents("tr").find("td[data-th='Product']").find("h4").text().trim();
+
+        // Use SweetAlert instead of native confirm
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, remove it!',
+            cancelButtonText: 'Cancel',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '/lists/remove-from-list',
+                    method: "DELETE",
+                    data: {
+                        id: ele.parents("tr").attr("data-id")
+                    },
+                    success: function (response) {
+                        // SweetAlert for successful removal
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Removed!',
+                            text: `${productName} has been removed from the cart.`,
+                            showConfirmButton: false,
+                            timer: 1500 // Auto-close after 1.5 seconds
+                        }).then(() => {
+                            // Reload the page or update the cart dynamically (optional)
+                            window.location.reload(); // Refresh the page
+                        });
+                    }
+                });
+            }
+        });
     });
 
 

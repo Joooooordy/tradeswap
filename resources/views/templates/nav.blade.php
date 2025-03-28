@@ -29,7 +29,7 @@
                     <span class="material-symbols-outlined" id="account">person</span>
 
                     <div id="dropdownMenu" class="dropdown-content">
-                        <p>Hallo {{ucfirst(Auth::user()->name)}}</p>
+                        <p>Welkom {{ucfirst(Auth::user()->name)}}</p>
                         <a href="{{ route('profile', ['id' => Auth::user()->id]) }}">Account</a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
@@ -44,7 +44,7 @@
                 </div>
             @endauth
 
-            <a href="/wishlist" class="wishlist">
+            <a href="{{ route('showLists') }}" class="wishlist">
                 <i class="fa-solid fa-heart"></i>
             </a>
 

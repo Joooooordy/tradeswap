@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ListController;
@@ -37,16 +38,25 @@ Route::get('/check-providers', [UserInventoryController::class, 'testCookie']);
 
 
 //shopping cart
-Route::get('cart', [ItemController::class, 'cart'])->name('cart');
+Route::get('cart', [CartController::class, 'cart'])->name('cart');
+
 Route::prefix('cart')->group(function () {
-    Route::get('add-to-cart/{id}', [ItemController::class, 'addToCart'])->name('addToCart');
-    Route::patch('update-cart', [ItemController::class, 'update'])->name('updateCart');
-    Route::delete('remove-from-cart', [ItemController::class, 'remove'])->name('removeFromCart');
+    Route::get('add-to-cart/{id}', [CartController::class, 'addToCart'])->name('addToCart');
+    Route::patch('update-cart', [CartController::class, 'update'])->name('updateCart');
+    Route::delete('remove-from-cart', [CartController::class, 'remove'])->name('removeFromCart');
 });
 
 
 
 Route::middleware([Authenticate::class, 'auth'])->group(function () {
+    Route::prefix('lists')->group(function () {
+        Route::get('add-to-list/{id}', [ListController::class, 'addToList'])->name('addToList');
+        Route::get('overview-lists', [ListController::class, 'showLists'])->name('showLists');
+        Route::get('wishlist', [ListController::class, 'showWishlist'])->name('showWishlist');
+        Route::delete('remove-from-list', [ListController::class, 'remove'])->name('removeFromList');
+    });
+
+
     Route::get('/items/items/{user}', [TradeController::class, 'getUserItems'])->name('getUserItems');
     Route::post('/trades', [TradeController::class, 'createTrade'])->name('create');       // Create a new items
     Route::post('/trades/{items}/accept', [TradeController::class, 'acceptTrade'])->name('accept'); // Accept a items
