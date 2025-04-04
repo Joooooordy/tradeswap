@@ -53,7 +53,8 @@ Route::middleware([Authenticate::class, 'auth'])->group(function () {
         Route::get('add-to-list/{id}', [ListController::class, 'addToList'])->name('addToList');
         Route::get('overview-lists', [ListController::class, 'showLists'])->name('showLists');
         Route::get('wishlist', [ListController::class, 'showWishlist'])->name('showWishlist');
-        Route::delete('remove-from-list', [ListController::class, 'remove'])->name('removeFromList');
+        Route::post('update-name/{id}', [ListController::class, 'updateName'])->name('updateName');
+        Route::delete('remove-from-list/{id}', [ListController::class, 'remove'])->name('removeFromList');
     });
 
 

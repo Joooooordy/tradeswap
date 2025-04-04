@@ -43,7 +43,7 @@ class ListController extends Controller
         $wishlist = $wishlists->first(); // Get the first wishlist
         $list_items = WishlistItem::where('wishlist_id', $wishlist->id)->get(); // Get all items in the first wishlist
 
-        return view('wishlist.list', compact('wishlists', 'list_items'));
+        return view('wishlist.list', compact('wishlists', 'wishlist', 'list_items'));
 
     }
 
@@ -80,18 +80,18 @@ class ListController extends Controller
             $wishlistItem = WishlistItem::create([
                 'wishlist_id' => $wishlist->id,
                 'item_id' => $id,
-                'item_name' => $product->item_name,
-                'item_price' => $product->price,
-                'icon_url' => $product->icon_url,
             ]);
+
+            $itemData = UserInventory::with('user')->where('id', $wishlistItem->item_id)->first();
 
             return response()->json([
                 'success' => true,
                 'message' => 'Product added to wishlist successfully!',
                 'list_item' => [
-                    'name' => $wishlistItem->item_name,
-                    'image' => $wishlistItem->icon_url,
-                    'price' => $wishlistItem->item_price,
+                    'name' => $itemData->item_name,
+                    'image' => $itemData->icon_url,
+                    'price' => $itemData->item_price,
+                    'user' => $itemData->user->name,
                 ],
             ]);
         } catch (\Exception $e) {
@@ -104,31 +104,40 @@ class ListController extends Controller
         }
     }
 
-    public function remove(Request $request)
+    public function remove($id)
     {
-        if ($request->id) {
-            try {
-                // Check if the item exists in the wishlist for the logged-in user
-                $wishlistItem = Wishlist::where('user_id', Auth::id())
-                    ->where('item_id', $request->id)
-                    ->first();
+        try {
+            // Find the item in the wishlist_item table
+            $wishlistItem = WishlistItem::where('item_id', $id)
+                ->whereHas('wishlist', function ($query) {
+                    $query->where('user_id', Auth::id());
+                })
+                ->first();
 
-                // If the item exists, remove it
-                if ($wishlistItem) {
-                    $wishlistItem->delete();
-                    session()->flash('success', 'Product removed from wishlist successfully');
-                } else {
-                    session()->flash('error', 'Product not found in your wishlist');
-                }
-            } catch (\Exception $e) {
-                // Log the error
-                Log::error('Error removing item from wishlist: ' . $e->getMessage());
-
-                session()->flash('error', 'An error occurred while removing the product from your wishlist');
+            if ($wishlistItem) {
+                $wishlistItem->delete();
+                return response()->json(['success' => 'Item removed from wishlist']);
+            } else {
+                return response()->json(['error' => 'Item not found in your wishlist'], 404);
             }
+        } catch (\Exception $e) {
+            Log::error('Error removing item from wishlist: ' . $e->getMessage());
+            return response()->json(['error' => 'Something went wrong'], 500);
         }
+    }
 
-        // Redirect or return a response (optional)
-        return back();
+
+    public function updateName(Request $request, $id)
+    {
+        $wishlist = Wishlist::where('user_id', Auth::id())->where('id', $id)->firstOrFail();
+
+        $request->validate([
+            'name' => 'required|string|max:35',
+        ]);
+
+        $wishlist->name = $request->name;
+        $wishlist->save();
+
+        return response()->json(['success' => true]);
     }
 }

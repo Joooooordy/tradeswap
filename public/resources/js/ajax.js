@@ -230,6 +230,7 @@ $(document).ready(function () {
             type: "GET",
             dataType: "json",
             success: function (response) {
+                console.log(response)
                 if (response.success) {
                     Swal.fire({
                         title: "Item added to wishlist",
@@ -249,7 +250,7 @@ $(document).ready(function () {
                         reverseButtons: true,
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            window.location.href = "/overview-lists"; // Redirect to wishlist instead of cart
+                            window.location.href = "lists/overview-lists"; // Redirect to wishlist instead of cart
                         }
                     });
 
@@ -282,7 +283,8 @@ $(document).ready(function () {
         const ele = $(this);
 
         // Get the product name (you can adjust the selector depending on your HTML structure)
-        const productName = ele.parents("tr").find("td[data-th='Product']").find("h4").text().trim();
+        const productName = ele.parents("item").find("td[data-th='Product']").find("h4").text().trim();
+        let productId = $(this).data("id");
 
         // Use SweetAlert instead of native confirm
         Swal.fire({
@@ -296,7 +298,7 @@ $(document).ready(function () {
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: '/lists/remove-from-list',
+                    url: '/lists/remove-from-list/' + productId,
                     method: "DELETE",
                     data: {
                         id: ele.parents("tr").attr("data-id")
@@ -316,6 +318,55 @@ $(document).ready(function () {
                     }
                 });
             }
+        });
+    });
+
+    $('#save-wishlist-name').on('click', function () {
+        let newName = $('#modal-wishlist-name').val().trim();
+        let wishlistId = $('#edit-wishlist-name').data('id');
+
+        if (newName === '') {
+            alert('Name cannot be empty!');
+            return;
+        }
+
+        $.ajax({
+            url: '/lists/update-name/' + wishlistId,
+            method: 'POST',
+            data: {
+                _token: $('meta[name="csrf-token"]').attr('content'),
+                name: newName,
+            },
+            success: function (response) {
+                $('#wishlist-name-text').text(newName);
+                $('#editModal').fadeOut();
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Wishlist Updated!',
+                    text: 'Your wishlist name has been updated successfully.',
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+            },
+            error: function () {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Update Failed',
+                    text: 'There was a problem updating your wishlist name. Please try again.',
+                    confirmButtonText: 'OK'
+                });
+            }
+        })
+    });
+
+    // Copy shareable link
+    $(".btn-copy-link").click(function () {
+        const wishlistId = $(this).data("id");
+        const url = `${window.location.origin}/lists/wishlist/${wishlistId}?view=public`;
+
+        navigator.clipboard.writeText(url).then(() => {
+            Swal.fire("Copied!", "Wishlist link copied to clipboard.", "success");
         });
     });
 

@@ -28,4 +28,9 @@ class WishlistItem extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function wishlist()
+    {
+        return $this->belongsTo(Wishlist::class);
+    }
 }

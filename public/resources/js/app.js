@@ -163,5 +163,48 @@ $(document).ready(function () {
     if (eyeIcon3) {
         eyeIcon3.addEventListener("click", toggleLoginPassword);
     }
+
+    // update wishlist name
+    function updateCharacterCount() {
+        let currentLength = $('#modal-wishlist-name').val().length;
+        let maxLength = 35; // Set your max character limit here
+        $('.character-count').text(currentLength + '/' + maxLength); // Update character count text
+    }
+
+    // Call updateCharacterCount whenever the user types in the input
+    $('#modal-wishlist-name').on('input', function () {
+        updateCharacterCount();
+        checkSaveButtonState(); // Also check save button state when user types
+    });
+
+    // Call updateCharacterCount when opening the modal to show the initial count
+    $('#edit-wishlist-name').on('click', function () {
+        let currentName = $('#wishlist-name-text').text().trim();
+        $('#modal-wishlist-name').val(currentName);
+        $('#editModal').fadeIn();
+
+        // Update the character count
+        updateCharacterCount();
+
+        // Reset Save button state when opening the modal
+        checkSaveButtonState();
+    });
+
+    // Function to check if the new name is different from the current name
+    function checkSaveButtonState() {
+        let currentName = $('#wishlist-name-text').text().trim();
+        let newName = $('#modal-wishlist-name').val().trim();
+
+        if (newName === currentName || newName === '') {
+            $('#save-wishlist-name').prop('disabled', true); // Disable and grey out the button
+        } else {
+            $('#save-wishlist-name').prop('disabled', false); // Enable the button
+        }
+    }
+
+    // Enable/Disable the Save button when the input changes
+    $('#closeModal, #cancel-wishlist-name').on('click', function () {
+        $('#editModal').fadeOut();
+    });
 });
 

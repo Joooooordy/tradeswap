@@ -97,6 +97,39 @@ body {
         overflow: hidden;
         will-change: contents;
 
+        .shop-buttons {
+            display: flex;
+            gap: 8px;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+
+            .add-to-list-button {
+                display: flex;
+                padding-top: 12px;
+                pointer-events: none;
+
+                .add-to-list {
+                    display: inline-block;
+                    text-decoration: none;
+                    background-color: variables.$bittersweet;
+                    color: white;
+                    padding: 8px;
+                    border-radius: 5px;
+                    transition: transform 0.3s ease, box-shadow 0.3s ease;
+                    pointer-events: auto;
+
+                    .heart {
+                        display: flex;
+                    }
+
+                    &:hover {
+                        transform: scale(1.1);
+                    }
+                }
+            }
+        }
+
         h3 {
             font-size: 18px;
             margin: 0 0 10px 0;
@@ -971,6 +1004,41 @@ h1 {
 /**********************************
  */
 
+.lists {
+    display: flex;
+    align-items: center;
+    color: variables.$white;
+    font-family: inherit;
+
+    #edit-wishlist-name {
+        display: flex;
+        padding-left: 8px;
+    }
+}
+
+.wishlist-shop-buttons {
+    .remove-from-list-button {
+        display: inline-block;
+        padding: 12px 0 0 0;
+
+        .remove-from-list {
+            font-family: inherit;
+            text-decoration: none;
+            background-color: variables.$firebrick;
+            color: white;
+            padding: 8px;
+            border-radius: 5px;
+            border: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+
+            &:hover {
+                transform: scale(1.05);
+            }
+        }
+    }
+}
+
 .wishlist-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -1039,4 +1107,94 @@ h1 {
         }
     }
 }
+
+.wishlist-modal {
+    display: flex;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+
+    // Center the modal content
+    justify-content: center;
+    align-items: center;
+
+    &-content {
+        background-color: variables.$light_black;
+        padding: 2rem;
+        border-radius: 12px;
+        text-align: center;
+        width: 400px;
+        color: variables.$soft_white;
+        box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+        position: relative;
+
+        .name-validation {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.6rem;
+            margin-top: 1rem;
+            font-size: 1.1rem;
+            border-radius: 6px;
+            border: none;
+            background: #333;
+            color: #fff;
+        }
+
+        .wishlist-modal-buttons {
+            margin-top: 1.5rem;
+
+            button {
+                margin: 0 0.5rem;
+                padding: 0.5rem 1rem;
+                border: none;
+                border-radius: 6px;
+                font-weight: bold;
+                cursor: pointer;
+                transition: all 0.2s ease-in-out;
+
+                &.btn-save {
+                    background-color: variables.$green;
+                    color: inherit;
+
+                    &:hover {
+                        background-color: variables.$cal-poly-green;
+                    }
+
+                    &:disabled {
+                        background-color: variables.$grey;  // Grey color when disabled
+                        opacity: 0.5;            // Make the button appear faded
+                        cursor: default;
+                    }
+                }
+
+                &.btn-cancel {
+                    background-color: variables.$firebrick;
+                    color: inherit;
+
+                    &:hover {
+                        background-color: variables.$red;
+                    }
+                }
+            }
+        }
+    }
+
+    &-close {
+        position: absolute;
+        top: 1.5rem;
+        right: 1.5rem;
+        font-size: 1.8rem;
+        cursor: pointer;
+        color: #fff;
+    }
+}
+
 
