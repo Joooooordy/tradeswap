@@ -308,7 +308,7 @@ $(document).ready(function () {
                         Swal.fire({
                             icon: 'success',
                             title: 'Removed!',
-                            text: `${productName} has been removed from the cart.`,
+                            text: `${productName} has been removed from the wishlist.`,
                             showConfirmButton: false,
                             timer: 1500 // Auto-close after 1.5 seconds
                         }).then(() => {
