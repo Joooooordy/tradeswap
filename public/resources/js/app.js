@@ -164,6 +164,10 @@ $(document).ready(function () {
         eyeIcon3.addEventListener("click", toggleLoginPassword);
     }
 
+    // ***************************//
+    // WISHLIST FUNCTIONS
+    //***************************//
+
     // update wishlist name
     function updateCharacterCount() {
         let currentLength = $('#modal-wishlist-name').val().length;
